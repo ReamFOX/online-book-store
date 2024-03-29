@@ -1,6 +1,7 @@
 package com.farion.onlinebookstore.controller;
 
-import com.farion.onlinebookstore.entity.Book;
+import com.farion.onlinebookstore.dto.BookDto;
+import com.farion.onlinebookstore.dto.CreateBookRequestDto;
 import com.farion.onlinebookstore.service.BookService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,14 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<Book> findAll() {
+    public List<BookDto> findAll() {
         return bookService.findAll();
     }
 
+
+
     @PostMapping
-    public Book save(@RequestBody Book book) {
-        return bookService.save(book);
+    public BookDto save(@RequestBody CreateBookRequestDto requestDto) {
+        return bookService.save(requestDto);
     }
 }

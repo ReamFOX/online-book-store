@@ -1,12 +1,14 @@
 package com.farion.onlinebookstore.service;
 
+import com.farion.onlinebookstore.dto.BookDto;
+import com.farion.onlinebookstore.dto.CreateBookRequestDto;
 import com.farion.onlinebookstore.entity.Book;
 import java.util.List;
 
 public interface BookService {
-    Book save(Book book);
+    BookDto save(CreateBookRequestDto requestDto);
 
-    Book getBookById(Long id);
+    BookDto getBookById(Long id);
 
-    List<Book> findAll();
+    List<BookDto> findAll();
 }
