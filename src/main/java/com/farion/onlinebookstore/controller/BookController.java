@@ -22,8 +22,6 @@ public class BookController {
         return bookService.findAll();
     }
 
-
-
     @PostMapping
     public BookDto save(@RequestBody CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);

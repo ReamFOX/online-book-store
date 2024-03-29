@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class OnlineBookStoreApplication {
 	@Autowired
 	private BookService bookService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(OnlineBookStoreApplication.class, args);
 	}
