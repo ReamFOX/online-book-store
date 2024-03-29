@@ -1,32 +1,33 @@
 package com.farion.onlinebookstore.repository.impl;
 
 import com.farion.onlinebookstore.entity.Book;
+import com.farion.onlinebookstore.exception.DataProcessingException;
 import com.farion.onlinebookstore.exception.EntityNotFoundException;
 import com.farion.onlinebookstore.repository.BookRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
-    private final SessionFactory sessionFactory;
+    private final EntityManagerFactory entityManagerFactory;
 
     @Override
     public Book save(Book book) {
-        Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            session.persist(book);
+        EntityTransaction transaction = null;
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(book);
             transaction.commit();
             return book;
         } catch (Exception e) {
-            if (transaction != null) {
+            if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
             throw new EntityNotFoundException("Can`t insert book " + book + " into DB", e);
@@ -34,24 +35,22 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public Optional<Book> findBookById(Long id) {
-        String query = "FROM Book WHERE id = :id";
-        try (Session session = sessionFactory.openSession()) {
-            Query<Book> bookQuery = session.createQuery(query, Book.class);
-            bookQuery.setParameter("id", id);
-            return bookQuery.uniqueResultOptional();
+    public Optional<Book> findById(Long id) {
+        try (EntityManager entityManager =  entityManagerFactory.createEntityManager()) {
+            Book book = entityManager.find(Book.class, id);
+            return Optional.ofNullable(book);
         } catch (Exception e) {
-            throw new EntityNotFoundException("Can`t find book by id:" + id, e);
+            throw new DataProcessingException("Can`t find book by id:" + id, e);
         }
     }
 
     @Override
     public List<Book> findAll() {
         String query = "SELECT b FROM Book b";
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery(query, Book.class).getResultList();
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            return entityManager.createQuery(query, Book.class).getResultList();
         } catch (Exception e) {
-            throw new EntityNotFoundException("Can`t get all books fro DB", e);
+            throw new DataProcessingException("Can`t get all books fro DB", e);
         }
     }
 }

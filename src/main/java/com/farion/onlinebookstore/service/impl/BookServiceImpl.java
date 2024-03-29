@@ -3,7 +3,8 @@ package com.farion.onlinebookstore.service.impl;
 import com.farion.onlinebookstore.dto.BookDto;
 import com.farion.onlinebookstore.dto.CreateBookRequestDto;
 import com.farion.onlinebookstore.entity.Book;
-import com.farion.onlinebookstore.mapper.BookMapper;
+import com.farion.onlinebookstore.exception.EntityNotFoundException;
+import com.farion.onlinebookstore.mapper.impl.BookMapperImpl;
 import com.farion.onlinebookstore.repository.BookRepository;
 import com.farion.onlinebookstore.service.BookService;
 import java.util.List;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-    private final BookMapper bookMapper;
+    private final BookMapperImpl bookMapper;
 
     @Override
     public BookDto save(CreateBookRequestDto requestDto) {
@@ -23,9 +24,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBookById(Long id) {
-        Book book = bookRepository.findBookById(id).orElseThrow(
-                () -> new RuntimeException("Book with id " + id + " doesn't exist"));
+    public BookDto findById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Book with id " + id + " doesn't exist"));
         return bookMapper.toDto(book);
     }
 
