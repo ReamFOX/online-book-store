@@ -1,6 +1,7 @@
 package com.farion.onlinebookstore.repository.impl;
 
 import com.farion.onlinebookstore.entity.Book;
+import com.farion.onlinebookstore.exception.EntityNotFoundException;
 import com.farion.onlinebookstore.repository.BookRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can`t insert book " + book + " into DB", e);
+            throw new EntityNotFoundException("Can`t insert book " + book + " into DB", e);
         }
     }
 
@@ -37,7 +38,7 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery(query, Book.class).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can`t get all books fro DB", e);
+            throw new EntityNotFoundException("Can`t get all books fro DB", e);
         }
     }
 }

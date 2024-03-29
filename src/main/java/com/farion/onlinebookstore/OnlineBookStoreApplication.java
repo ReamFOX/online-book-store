@@ -16,26 +16,4 @@ public class OnlineBookStoreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OnlineBookStoreApplication.class, args);
 	}
-
-	@Bean
-	public CommandLineRunner commandLineRunner() {
-		return args -> {
-			Book catsCradle = new Book();
-			catsCradle.setTitle("Cat`s Cradle");
-			catsCradle.setAuthor("Kurt Vonnegut");
-			catsCradle.setPrice(BigDecimal.valueOf(350));
-			catsCradle.setIsbn("9780575006379");
-			bookService.save(catsCradle);
-
-			Book slaughterhouse = new Book();
-			slaughterhouse.setTitle("Slaughterhouse 5");
-			slaughterhouse.setAuthor("Kurt Vonnegut");
-			slaughterhouse.setPrice(BigDecimal.valueOf(400));
-			slaughterhouse.setIsbn("9780224618014");
-			bookService.save(slaughterhouse);
-
-			bookService.findAll().forEach(System.out::println);
-		};
-	}
-
 }
