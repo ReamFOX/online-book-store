@@ -2,7 +2,6 @@ package com.farion.onlinebookstore.repository.impl;
 
 import com.farion.onlinebookstore.entity.Book;
 import com.farion.onlinebookstore.exception.DataProcessingException;
-import com.farion.onlinebookstore.exception.EntityNotFoundException;
 import com.farion.onlinebookstore.repository.BookRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -30,13 +29,13 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new EntityNotFoundException("Can`t insert book " + book + " into DB", e);
+            throw new DataProcessingException("Can`t insert book " + book + " into DB", e);
         }
     }
 
     @Override
     public Optional<Book> findById(Long id) {
-        try (EntityManager entityManager =  entityManagerFactory.createEntityManager()) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             Book book = entityManager.find(Book.class, id);
             return Optional.ofNullable(book);
         } catch (Exception e) {
