@@ -4,10 +4,12 @@ import com.farion.onlinebookstore.entity.Book;
 import com.farion.onlinebookstore.exception.EntityNotFoundException;
 import com.farion.onlinebookstore.repository.BookRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +31,18 @@ public class BookRepositoryImpl implements BookRepository {
                 transaction.rollback();
             }
             throw new EntityNotFoundException("Can`t insert book " + book + " into DB", e);
+        }
+    }
+
+    @Override
+    public Optional<Book> findBookById(Long id) {
+        String query = "FROM Book WHERE id = :id";
+        try (Session session = sessionFactory.openSession()) {
+            Query<Book> bookQuery = session.createQuery(query, Book.class);
+            bookQuery.setParameter("id", id);
+            return bookQuery.uniqueResultOptional();
+        } catch (Exception e) {
+            throw new EntityNotFoundException("Can`t find book by id:" + id, e);
         }
     }
 

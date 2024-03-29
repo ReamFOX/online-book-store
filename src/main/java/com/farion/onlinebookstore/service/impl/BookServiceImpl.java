@@ -18,6 +18,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book getBookById(Long id) {
+        return bookRepository.findBookById(id).orElseThrow(
+                () -> new RuntimeException("Book with id " + id + " doesn't exist"));
+    }
+
+    @Override
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
