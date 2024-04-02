@@ -35,7 +35,6 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id);
     }
 
-
     @Override
     public List<BookDto> findAll() {
         return bookRepository.findAll().stream().map(bookMapper::toDto).toList();
