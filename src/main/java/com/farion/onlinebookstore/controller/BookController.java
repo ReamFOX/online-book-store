@@ -1,6 +1,7 @@
 package com.farion.onlinebookstore.controller;
 
 import com.farion.onlinebookstore.dto.BookDto;
+import com.farion.onlinebookstore.dto.BookSearchParameters;
 import com.farion.onlinebookstore.dto.CreateBookRequestDto;
 import com.farion.onlinebookstore.service.BookService;
 import java.util.List;
@@ -22,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
-    @GetMapping
-    public List<BookDto> findAll() {
-        return bookService.findAll();
+    @PostMapping
+    public BookDto save(@RequestBody CreateBookRequestDto requestDto) {
+        return bookService.createBook(requestDto);
     }
 
     @GetMapping("/{id}")
@@ -32,9 +33,14 @@ public class BookController {
         return bookService.findById(id);
     }
 
-    @PostMapping
-    public BookDto save(@RequestBody CreateBookRequestDto requestDto) {
-        return bookService.createBook(requestDto);
+    @GetMapping
+    public List<BookDto> findAll() {
+        return bookService.findAll();
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> search(BookSearchParameters params) {
+        return bookService.search(params);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

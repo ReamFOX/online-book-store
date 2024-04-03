@@ -1,14 +1,17 @@
 package com.farion.onlinebookstore.service.impl;
 
 import com.farion.onlinebookstore.dto.BookDto;
+import com.farion.onlinebookstore.dto.BookSearchParameters;
 import com.farion.onlinebookstore.dto.CreateBookRequestDto;
 import com.farion.onlinebookstore.entity.Book;
 import com.farion.onlinebookstore.exception.EntityNotFoundException;
 import com.farion.onlinebookstore.mapper.impl.BookMapperImpl;
-import com.farion.onlinebookstore.repository.BookRepository;
+import com.farion.onlinebookstore.repository.book.BookRepository;
+import com.farion.onlinebookstore.repository.book.BookSpecificationBuilder;
 import com.farion.onlinebookstore.service.BookService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapperImpl bookMapper;
+    private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
     public BookDto createBook(CreateBookRequestDto requestDto) {
@@ -51,5 +55,14 @@ public class BookServiceImpl implements BookService {
         book.setDescription(requestDto.getDescription());
         book.setCoverImage(requestDto.getCoverImage());
         return bookMapper.toDto(bookRepository.save(book));
+    }
+
+    @Override
+    public List<BookDto> search(BookSearchParameters params) {
+        Specification<Book> bookSpecification = bookSpecificationBuilder.build(params);
+        return bookRepository.findAll(bookSpecification)
+                .stream()
+                .map(bookMapper::toDto)
+                .toList();
     }
 }
