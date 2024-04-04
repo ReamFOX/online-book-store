@@ -7,6 +7,7 @@ import com.farion.onlinebookstore.service.BookService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,13 +37,13 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookDto> findAll() {
-        return bookService.findAll();
+    public List<BookDto> findAll(Pageable pageable) {
+        return bookService.findAll(pageable);
     }
 
     @GetMapping("/search")
-    public List<BookDto> search(BookSearchParameters params) {
-        return bookService.search(params);
+    public List<BookDto> search(BookSearchParameters params, Pageable pageable) {
+        return bookService.search(params, pageable);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
