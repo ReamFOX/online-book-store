@@ -4,6 +4,7 @@ import com.farion.onlinebookstore.dto.BookDto;
 import com.farion.onlinebookstore.dto.BookSearchParameters;
 import com.farion.onlinebookstore.dto.CreateBookRequestDto;
 import com.farion.onlinebookstore.service.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public BookDto save(@RequestBody CreateBookRequestDto requestDto) {
+    public BookDto save(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.createBook(requestDto);
     }
 
