@@ -33,6 +33,7 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
         if (!StringUtils.isEmpty(param)) {
             return spec.and(bookSpecificationProviderManager
                     .getSpecificationProvider(paramName)
+
                     .getSpecification(param));
         }
         return spec;
