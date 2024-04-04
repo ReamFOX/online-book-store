@@ -2,6 +2,7 @@ package com.farion.onlinebookstore.repository.book;
 
 import com.farion.onlinebookstore.entity.Book;
 import com.farion.onlinebookstore.repository.SpecificationProvider;
+import com.farion.onlinebookstore.util.ParameterNames;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -9,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class AuthorSpecificationProvider implements SpecificationProvider<Book> {
     @Override
     public String getKey() {
-        return "author";
+        return ParameterNames.AUTHOR;
     }
 
     public Specification<Book> getSpecification(String param) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.like(
-                root.get("author"), "%" + param + "%");
+                root.get(ParameterNames.AUTHOR), "%" + param + "%");
     }
 }
