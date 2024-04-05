@@ -28,10 +28,12 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
     }
 
     private Specification<Book> populateSpecificationForParameter(String param,
-                                                                  String parameterName,
+                                                                  String paramName,
                                                                   Specification<Book> spec) {
         if (!StringUtils.isEmpty(param)) {
-            return spec.and(bookSpecificationProviderManager.getSpecificationProvider(parameterName)
+            return spec.and(bookSpecificationProviderManager
+                    .getSpecificationProvider(paramName)
+
                     .getSpecification(param));
         }
         return spec;
