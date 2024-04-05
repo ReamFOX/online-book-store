@@ -4,11 +4,11 @@ import com.farion.onlinebookstore.dto.BookDto;
 import com.farion.onlinebookstore.dto.BookSearchParameters;
 import com.farion.onlinebookstore.dto.CreateBookRequestDto;
 import com.farion.onlinebookstore.entity.Book;
-import com.farion.onlinebookstore.exception.EntityNotFoundException;
-import com.farion.onlinebookstore.mapper.impl.BookMapperImpl;
+import com.farion.onlinebookstore.mapper.BookMapper;
 import com.farion.onlinebookstore.repository.book.BookRepository;
 import com.farion.onlinebookstore.repository.book.BookSpecificationBuilder;
 import com.farion.onlinebookstore.service.BookService;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-    private final BookMapperImpl bookMapper;
+    private final BookMapper bookMapper;
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
