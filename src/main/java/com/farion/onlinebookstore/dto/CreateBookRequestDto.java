@@ -1,7 +1,7 @@
 package com.farion.onlinebookstore.dto;
 
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -11,10 +11,10 @@ import org.hibernate.validator.constraints.URL;
 
 @Data
 public class CreateBookRequestDto {
-    @NotEmpty
+    @NotBlank
     @Size(max = 255, message = "Title can`t be longer than 255 characters")
     private String title;
-    @NotEmpty
+    @NotBlank
     @Size(max = 255, message = "Author can`t be longer than 255 characters")
     private String author;
     @ISBN(message = "invalid isbn format")
