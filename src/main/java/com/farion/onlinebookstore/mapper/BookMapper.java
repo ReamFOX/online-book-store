@@ -1,8 +1,8 @@
 package com.farion.onlinebookstore.mapper;
 
 import com.farion.onlinebookstore.config.MapperConfig;
-import com.farion.onlinebookstore.dto.BookDto;
-import com.farion.onlinebookstore.dto.CreateBookRequestDto;
+import com.farion.onlinebookstore.dto.book.BookDto;
+import com.farion.onlinebookstore.dto.book.CreateBookRequestDto;
 import com.farion.onlinebookstore.entity.Book;
 import org.mapstruct.Mapper;
 

@@ -1,4 +1,4 @@
-package com.farion.onlinebookstore.dto;
+package com.farion.onlinebookstore.dto.book;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

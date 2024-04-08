@@ -1,8 +1,8 @@
 package com.farion.onlinebookstore.service;
 
-import com.farion.onlinebookstore.dto.BookDto;
-import com.farion.onlinebookstore.dto.BookSearchParameters;
-import com.farion.onlinebookstore.dto.CreateBookRequestDto;
+import com.farion.onlinebookstore.dto.book.BookDto;
+import com.farion.onlinebookstore.dto.book.BookSearchParameters;
+import com.farion.onlinebookstore.dto.book.CreateBookRequestDto;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 

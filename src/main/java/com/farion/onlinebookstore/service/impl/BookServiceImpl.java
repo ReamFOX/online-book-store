@@ -1,8 +1,8 @@
 package com.farion.onlinebookstore.service.impl;
 
-import com.farion.onlinebookstore.dto.BookDto;
-import com.farion.onlinebookstore.dto.BookSearchParameters;
-import com.farion.onlinebookstore.dto.CreateBookRequestDto;
+import com.farion.onlinebookstore.dto.book.BookDto;
+import com.farion.onlinebookstore.dto.book.BookSearchParameters;
+import com.farion.onlinebookstore.dto.book.CreateBookRequestDto;
 import com.farion.onlinebookstore.entity.Book;
 import com.farion.onlinebookstore.mapper.BookMapper;
 import com.farion.onlinebookstore.repository.book.BookRepository;
