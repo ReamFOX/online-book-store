@@ -17,6 +17,7 @@ public class CreateBookRequestDto {
     @NotBlank
     @Size(max = 255, message = "Author can`t be longer than 255 characters")
     private String author;
+    @NotBlank
     @ISBN(message = "invalid isbn format")
     private String isbn;
     @NotNull
