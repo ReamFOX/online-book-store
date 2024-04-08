@@ -1,6 +1,7 @@
 package com.farion.onlinebookstore.dto.user;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
@@ -10,9 +11,9 @@ public class RegisterUserRequestDto {
     private String email;
     private String password;
     private String repeatPassword;
-    @NotEmpty
+    @NotBlank
     private String firstName;
-    @NotEmpty
+    @NotBlank
     private String lastName;
     private String shippingAddress;
 }

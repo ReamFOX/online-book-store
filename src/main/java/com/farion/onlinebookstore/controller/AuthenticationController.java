@@ -4,6 +4,7 @@ import com.farion.onlinebookstore.dto.user.RegisterUserRequestDto;
 import com.farion.onlinebookstore.dto.user.UserDto;
 import com.farion.onlinebookstore.exception.RegistrationException;
 import com.farion.onlinebookstore.security.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto register(@RequestBody RegisterUserRequestDto requestDto) throws RegistrationException {
+    public UserDto register(@RequestBody @Valid RegisterUserRequestDto requestDto) throws RegistrationException {
         return authenticationService.register(requestDto);
     }
 }
