@@ -4,13 +4,14 @@ import com.farion.onlinebookstore.dto.BookDto;
 import com.farion.onlinebookstore.dto.BookSearchParameters;
 import com.farion.onlinebookstore.dto.CreateBookRequestDto;
 import com.farion.onlinebookstore.entity.Book;
-import com.farion.onlinebookstore.exception.EntityNotFoundException;
-import com.farion.onlinebookstore.mapper.impl.BookMapperImpl;
+import com.farion.onlinebookstore.mapper.BookMapper;
 import com.farion.onlinebookstore.repository.book.BookRepository;
 import com.farion.onlinebookstore.repository.book.BookSpecificationBuilder;
 import com.farion.onlinebookstore.service.BookService;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-    private final BookMapperImpl bookMapper;
+    private final BookMapper bookMapper;
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
@@ -40,8 +41,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findAll() {
-        return bookRepository.findAll().stream().map(bookMapper::toDto).toList();
+    public List<BookDto> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable).stream().map(bookMapper::toDto).toList();
     }
 
     @Override
@@ -58,9 +59,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> search(BookSearchParameters params) {
+    public List<BookDto> search(BookSearchParameters params, Pageable pageable) {
         Specification<Book> bookSpecification = bookSpecificationBuilder.build(params);
-        return bookRepository.findAll(bookSpecification)
+        return bookRepository.findAll(bookSpecification, pageable)
                 .stream()
                 .map(bookMapper::toDto)
                 .toList();
