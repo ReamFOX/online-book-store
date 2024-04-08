@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-roles-table
+      author: farion
+      changes:
+        - createTable:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: roles_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_roles_pk
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_roles_pk
