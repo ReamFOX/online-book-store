@@ -18,10 +18,8 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
-        boolean isValid = true;
         Object firstFieldValue = new BeanWrapperImpl(o).getPropertyValue(firstFieldName);
         Object secondFieldValue = new BeanWrapperImpl(o).getPropertyValue(secondFieldName);
-
-        return Objects.equals(firstFieldValue, secondFieldValue) == isValid;
+        return Objects.equals(firstFieldValue, secondFieldValue);
     }
 }
