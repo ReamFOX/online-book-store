@@ -1,6 +1,6 @@
 package com.farion.onlinebookstore.repository.book;
 
-import com.farion.onlinebookstore.dto.BookSearchParameters;
+import com.farion.onlinebookstore.dto.book.BookSearchParameters;
 import com.farion.onlinebookstore.entity.Book;
 import com.farion.onlinebookstore.repository.SpecificationBuilder;
 import com.farion.onlinebookstore.repository.SpecificationProviderManager;

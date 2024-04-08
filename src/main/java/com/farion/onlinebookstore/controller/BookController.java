@@ -1,8 +1,8 @@
 package com.farion.onlinebookstore.controller;
 
-import com.farion.onlinebookstore.dto.BookDto;
-import com.farion.onlinebookstore.dto.BookSearchParameters;
-import com.farion.onlinebookstore.dto.CreateBookRequestDto;
+import com.farion.onlinebookstore.dto.book.BookDto;
+import com.farion.onlinebookstore.dto.book.BookSearchParameters;
+import com.farion.onlinebookstore.dto.book.CreateBookRequestDto;
 import com.farion.onlinebookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

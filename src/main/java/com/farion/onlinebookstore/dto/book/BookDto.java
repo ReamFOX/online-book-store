@@ -1,4 +1,4 @@
-package com.farion.onlinebookstore.dto;
+package com.farion.onlinebookstore.dto.book;
 
 import java.math.BigDecimal;
 import lombok.Data;

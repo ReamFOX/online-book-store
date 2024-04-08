@@ -53,6 +53,11 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return getDefTemplate(e, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(RegistrationException.class)
+    public ResponseEntity<Object> handleRegistrationException(RegistrationException e) {
+        return getDefTemplate(e, HttpStatus.BAD_REQUEST);
+    }
+
     private ResponseEntity<Object> getDefTemplate(Throwable e, HttpStatus status) {
         body.put(TIMESTAMP, LocalDateTime.now());
         body.put(STATUS, status);
