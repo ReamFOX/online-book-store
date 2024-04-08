@@ -1,7 +1,6 @@
 package com.farion.onlinebookstore.lib;
 
 import com.farion.onlinebookstore.validator.FieldMatchValidator;
-import jakarta.persistence.Table;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.ElementType;

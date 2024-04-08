@@ -5,5 +5,5 @@ import com.farion.onlinebookstore.dto.user.UserDto;
 import com.farion.onlinebookstore.exception.RegistrationException;
 
 public interface AuthenticationService {
-    UserDto register (RegisterUserRequestDto requestDto) throws RegistrationException;
+    UserDto register(RegisterUserRequestDto requestDto) throws RegistrationException;
 }
