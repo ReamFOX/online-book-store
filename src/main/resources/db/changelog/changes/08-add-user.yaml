@@ -7,6 +7,6 @@ databaseChangeLog:
             tableName: users
             columns:
               - column: {name: email, value: "sasha@gmail.com"}
-              - column: {name: password, value: "admin"}
+              - column: {name: password, value: "$2a$10$7J.3Cu5vuLOSaEJbHiXK6Oc2eWP9Qb6aUR7jVSmv6IzCMWS5.l8Hi"}
               - column: {name: first_name, value: "Oleksandr"}
               - column: {name: last_name, value: "Farion"}

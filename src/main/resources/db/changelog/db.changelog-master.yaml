@@ -17,5 +17,3 @@ databaseChangeLog:
       file: db/changelog/changes/08-add-user.yaml
   - include:
       file: db/changelog/changes/09-assign-roles-for-admin.yaml
-  - include:
-      file: db/changelog/changes/10-set-bcrypt-password.yaml
