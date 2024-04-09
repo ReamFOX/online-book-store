@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-user
+      author: farion
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: {name: email, value: "sasha@gmail.com"}
+              - column: {name: password, value: "admin"}
+              - column: {name: first_name, value: "Oleksandr"}
+              - column: {name: last_name, value: "Farion"}

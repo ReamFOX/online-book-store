@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: create-roles-table
       author: farion
-
       changes:
         - createTable:
             tableName: roles
@@ -15,7 +14,7 @@ databaseChangeLog:
                     primaryKey: true
               - column:
                   name: name
-                  type: tinyint
+                  type: enum('USER', 'ADMIN')
                   constraints:
                     nullable: false
                     unique: true

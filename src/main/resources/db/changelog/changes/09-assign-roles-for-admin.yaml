@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: assign-roles-for-admin
+      author: farion
+      changes:
+        - sql:
+            sql: INSERT INTO users_roles (role_id, user_id) VALUES ((SELECT id FROM roles WHERE name = 'ADMIN'), (SELECT id FROM users WHERE email = 'sasha@gmail.com'))
+        - sql:
+            sql: INSERT INTO users_roles (role_id, user_id) VALUES ((SELECT id FROM roles WHERE name = 'USER'), (SELECT id FROM users WHERE email = 'sasha@gmail.com'))

@@ -1,20 +1,22 @@
 databaseChangeLog:
   - changeSet:
-      id: create-users-roles-table
+      id: create-table-users-roles
       author: farion
       changes:
         - createTable:
             tableName: users_roles
             columns:
               - column:
-                  name: roles_id
-                  type: bigint
+                  name: role_id
+                  type: BIGINT
                   constraints:
-                    primaryKey: true
-                    primaryKeyName: users_roles_pk
+                    nullable: false
+                    foreignKeyName: fk_roles_id
+                    references: roles(id)
               - column:
                   name: user_id
-                  type: bigint
+                  type: BIGINT
                   constraints:
-                    primaryKey: true
-                    primaryKeyName: users_roles_pk
+                    nullable: false
+                    foreignKeyName: fk_users_id
+                    references: users(id)
