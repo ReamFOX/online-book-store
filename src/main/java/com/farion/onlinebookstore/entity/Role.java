@@ -1,7 +1,6 @@
 package com.farion.onlinebookstore.entity;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,7 +18,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
-    @Basic(optional=false)
+    @Basic(optional = false)
     private RoleName name;
 
     public enum RoleName {
