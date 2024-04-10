@@ -38,6 +38,8 @@ public class SecurityConfig {
                                 .authenticated()
                 )
                 .httpBasic(withDefaults())
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .userDetailsService(userDetailsService)
                 .build();
     }

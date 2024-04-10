@@ -38,18 +38,21 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Get book by id", description = "Get book by specific id")
     public BookDto findById(@PathVariable Long id) {
         return bookService.findById(id);
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Get all books", description = "Get a list of all available books")
     public List<BookDto> findAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
     @GetMapping("/search")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Get all books by search",
             description = "Get a list of books by searching by author, title and/or isbn")
     public List<BookDto> search(BookSearchParameters params, Pageable pageable) {
@@ -57,6 +60,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Soft delete book by id", description = "Soft delete book by specific id")
     public void delete(@PathVariable Long id) {
@@ -64,6 +68,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Update book by id", description = "Update book by specific id")
     public BookDto updateById(
             @PathVariable Long id, @RequestBody @Valid CreateBookRequestDto requestDto) {

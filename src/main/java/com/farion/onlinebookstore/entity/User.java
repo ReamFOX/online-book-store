@@ -1,5 +1,6 @@
 package com.farion.onlinebookstore.entity;
 
+import com.farion.onlinebookstore.util.RoleNamesUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,12 +12,13 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
@@ -37,7 +39,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String lastName;
     private String shippingAddress;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -49,7 +51,16 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        for (Role role : roles) {
+            switch (role.getName()) {
+                case USER -> authorities.add(new SimpleGrantedAuthority(RoleNamesUtil.USER));
+                case ADMIN -> authorities.add(new SimpleGrantedAuthority(RoleNamesUtil.ADMIN));
+                default ->
+                        throw new IllegalArgumentException("Unsupported role: " + role.getName());
+            }
+        }
+        return authorities;
     }
 
     @Override
