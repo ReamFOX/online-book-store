@@ -6,81 +6,81 @@ databaseChangeLog:
         - insert:
             tableName: books
             columns:
-              - column: { name: title, value: "To Kill a Mockingbird" }
-              - column: { name: author, value: "Harper Lee" }
-              - column: { name: isbn, value: "9780061120084" }
-              - column: { name: price, value: "10.99" }
-              - column: { name: description, value: "A gripping, heart-wrenching, and wholly remarkable tale of coming-of-age in a South poisoned by virulent prejudice." }
-              - column: { name: cover_image, value: "tokillamockingbird.jpg" }
+              - column: {name: title, value: "To Kill a Mockingbird" }
+              - column: {name: author, value: "Harper Lee" }
+              - column: {name: isbn, value: "9780061120084" }
+              - column: {name: price, value: "10.99" }
+              - column: {name: description, value: "A gripping, heart-wrenching, and wholly remarkable tale of coming-of-age in a South poisoned by virulent prejudice." }
+              - column: {name: cover_image, value: "tokillamockingbird.jpg" }
         - insert:
             tableName: books
             columns:
-              - column: { name: title, value: "1984" }
-              - column: { name: author, value: "George Orwell" }
-              - column: { name: isbn, value: "9780451524935" }
-              - column: { name: price, value: "9.99" }
-              - column: { name: description, value: "A dystopian novel by English novelist George Orwell." }
-              - column: { name: cover_image, value: "1984.jpg" }
+              - column: {name: title, value: "1984" }
+              - column: {name: author, value: "George Orwell" }
+              - column: {name: isbn, value: "9780451524935" }
+              - column: {name: price, value: "9.99" }
+              - column: {name: description, value: "A dystopian novel by English novelist George Orwell." }
+              - column: {name: cover_image, value: "1984.jpg" }
         - insert:
             tableName: books
             columns:
-              - column: { name: title, value: "The Catcher in the Rye" }
-              - column: { name: author, value: "J.D. Salinger" }
-              - column: { name: isbn, value: "9780316769488" }
-              - column: { name: price, value: "12.50" }
-              - column: { name: description, value: "A controversial novel by American author J. D. Salinger, first published in 1951." }
-              - column: { name: cover_image, value: "catcherintherye.jpg" }
+              - column: {name: title, value: "The Catcher in the Rye" }
+              - column: {name: author, value: "J.D. Salinger" }
+              - column: {name: isbn, value: "9780316769488" }
+              - column: {name: price, value: "12.50" }
+              - column: {name: description, value: "A controversial novel by American author J. D. Salinger, first published in 1951." }
+              - column: {name: cover_image, value: "catcherintherye.jpg" }
         - insert:
             tableName: books
             columns:
-              - column: { name: title, value: "Pride and Prejudice" }
-              - column: { name: author, value: "Jane Austen" }
-              - column: { name: isbn, value: "9780141439518" }
-              - column: { name: price, value: "8.95" }
-              - column: { name: description, value: "A romantic novel of manners written by Jane Austen." }
-              - column: { name: cover_image, value: "prideandprejudice.jpg" }
+              - column: {name: title, value: "Pride and Prejudice" }
+              - column: {name: author, value: "Jane Austen" }
+              - column: {name: isbn, value: "9780141439518" }
+              - column: {name: price, value: "8.95" }
+              - column: {name: description, value: "A romantic novel of manners written by Jane Austen." }
+              - column: {name: cover_image, value: "prideandprejudice.jpg" }
         - insert:
             tableName: books
             columns:
-              - column: { name: title, value: "The Great Gatsby" }
-              - column: { name: author, value: "F. Scott Fitzgerald" }
-              - column: { name: isbn, value: "9780743273565" }
-              - column: { name: price, value: "11.29" }
-              - column: { name: description, value: "A novel written by American author F. Scott Fitzgerald." }
-              - column: { name: cover_image, value: "greatgatsby.jpg" }
+              - column: {name: title, value: "The Great Gatsby" }
+              - column: {name: author, value: "F. Scott Fitzgerald" }
+              - column: {name: isbn, value: "9780743273565" }
+              - column: {name: price, value: "11.29" }
+              - column: {name: description, value: "A novel written by American author F. Scott Fitzgerald." }
+              - column: {name: cover_image, value: "greatgatsby.jpg" }
         - insert:
             tableName: books
             columns:
-              - column: { name: title, value: "To the Lighthouse" }
-              - column: { name: author, value: "Virginia Woolf" }
-              - column: { name: isbn, value: "9780156030472" }
-              - column: { name: price, value: "10.19" }
-              - column: { name: description, value: "A novel by Virginia Woolf that addresses the role of women in society." }
-              - column: { name: cover_image, value: "tothelighthouse.jpg" }
+              - column: {name: title, value: "To the Lighthouse" }
+              - column: {name: author, value: "Virginia Woolf" }
+              - column: {name: isbn, value: "9780156030472" }
+              - column: {name: price, value: "10.19" }
+              - column: {name: description, value: "A novel by Virginia Woolf that addresses the role of women in society." }
+              - column: {name: cover_image, value: "tothelighthouse.jpg" }
         - insert:
             tableName: books
             columns:
-              - column: { name: title, value: "Moby-Dick" }
-              - column: { name: author, value: "Herman Melville" }
-              - column: { name: isbn, value: "9780142437247" }
-              - column: { name: price, value: "14.59" }
-              - column: { name: description, value: "A novel by Herman Melville about a voyage." }
-              - column: { name: cover_image, value: "mobydick.jpg" }
+              - column: {name: title, value: "Moby-Dick" }
+              - column: {name: author, value: "Herman Melville" }
+              - column: {name: isbn, value: "9780142437247" }
+              - column: {name: price, value: "14.59" }
+              - column: {name: description, value: "A novel by Herman Melville about a voyage." }
+              - column: {name: cover_image, value: "mobydick.jpg" }
         - insert:
             tableName: books
             columns:
-              - column: { name: title, value: "Brave New World" }
-              - column: { name: author, value: "Aldous Huxley" }
-              - column: { name: isbn, value: "9780060850524" }
-              - column: { name: price, value: "13.39" }
-              - column: { name: description, value: "A novel written by Aldous Huxley." }
-              - column: { name: cover_image, value: "bravenewworld.jpg" }
+              - column: {name: title, value: "Brave New World" }
+              - column: {name: author, value: "Aldous Huxley" }
+              - column: {name: isbn, value: "9780060850524" }
+              - column: {name: price, value: "13.39" }
+              - column: {name: description, value: "A novel written by Aldous Huxley." }
+              - column: {name: cover_image, value: "bravenewworld.jpg" }
         - insert:
             tableName: books
             columns:
-              - column: { name: title, value: "The Lord of the Rings" }
-              - column: { name: author, value: "J.R.R. Tolkien" }
-              - column: { name: isbn, value: "9780261102385" }
-              - column: { name: price, value: "20.99" }
-              - column: { name: description, value: "An epic high fantasy novel written by English author J.R.R. Tolkien." }
-              - column: { name: cover_image, value: "thelordoftherings.jpg" }
+              - column: {name: title, value: "The Lord of the Rings" }
+              - column: {name: author, value: "J.R.R. Tolkien" }
+              - column: {name: isbn, value: "9780261102385" }
+              - column: {name: price, value: "20.99" }
+              - column: {name: description, value: "An epic high fantasy novel written by English author J.R.R. Tolkien." }
+              - column: {name: cover_image, value: "thelordoftherings.jpg" }
