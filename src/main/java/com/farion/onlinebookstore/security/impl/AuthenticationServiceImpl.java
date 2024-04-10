@@ -30,9 +30,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     + requestDto.getEmail() + " already exist");
         }
         User user = userMapper.toModel(requestDto);
-        Role newUser = roleService.findByName(USER);
+        Role userRole = roleService.findByName(USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Set.of(newUser));
+        user.setRoles(Set.of(userRole));
         return userMapper.toDto(userRepository.save(user));
     }
 }
