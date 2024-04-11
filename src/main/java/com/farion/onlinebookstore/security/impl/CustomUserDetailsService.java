@@ -1,6 +1,6 @@
 package com.farion.onlinebookstore.security.impl;
 
-import com.farion.onlinebookstore.repository.user.UserRepository;
+import com.farion.onlinebookstore.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(
+        return userService.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("Can`t find user with email: " + email));
     }
 }

@@ -1,7 +1,7 @@
 package com.farion.onlinebookstore.mapper;
 
 import com.farion.onlinebookstore.config.MapperConfig;
-import com.farion.onlinebookstore.dto.user.RegisterUserRequestDto;
+import com.farion.onlinebookstore.dto.user.register.RegisterUserRequestDto;
 import com.farion.onlinebookstore.dto.user.UserDto;
 import com.farion.onlinebookstore.entity.User;
 import org.mapstruct.Mapper;
