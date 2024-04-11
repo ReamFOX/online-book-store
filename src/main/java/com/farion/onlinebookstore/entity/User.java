@@ -1,6 +1,8 @@
 package com.farion.onlinebookstore.entity;
 
-import com.farion.onlinebookstore.util.RoleNamesUtil;
+import static com.farion.onlinebookstore.entity.Role.RoleName.ROLE_ADMIN;
+import static com.farion.onlinebookstore.entity.Role.RoleName.ROLE_USER;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,7 +41,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String lastName;
     private String shippingAddress;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -54,8 +56,8 @@ public class User implements UserDetails {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         for (Role role : roles) {
             switch (role.getName()) {
-                case USER -> authorities.add(new SimpleGrantedAuthority(RoleNamesUtil.USER));
-                case ADMIN -> authorities.add(new SimpleGrantedAuthority(RoleNamesUtil.ADMIN));
+                case ROLE_ADMIN -> authorities.add(new SimpleGrantedAuthority(ROLE_ADMIN.name()));
+                case ROLE_USER -> authorities.add(new SimpleGrantedAuthority(ROLE_USER.name()));
                 default ->
                         throw new IllegalArgumentException("Unsupported role: " + role.getName());
             }

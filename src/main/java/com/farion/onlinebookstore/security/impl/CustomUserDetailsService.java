@@ -1,6 +1,6 @@
 package com.farion.onlinebookstore.security.impl;
 
-import com.farion.onlinebookstore.repository.user.UserRepository;
+import com.farion.onlinebookstore.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
