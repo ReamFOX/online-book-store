@@ -3,7 +3,7 @@ package com.farion.onlinebookstore.controller;
 import com.farion.onlinebookstore.dto.user.RegisterUserRequestDto;
 import com.farion.onlinebookstore.dto.user.UserDto;
 import com.farion.onlinebookstore.exception.RegistrationException;
-import com.farion.onlinebookstore.security.AuthenticationService;
+import com.farion.onlinebookstore.security.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @RestController
 public class AuthenticationController {
-    private final AuthenticationService authenticationService;
+    private final AuthService authService;
 
     @PostMapping("/register")
     @Operation(summary = "Register a new user", description = "Register a new user")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto register(@RequestBody @Valid RegisterUserRequestDto requestDto)
             throws RegistrationException {
-        return authenticationService.register(requestDto);
+        return authService.register(requestDto);
     }
 }
