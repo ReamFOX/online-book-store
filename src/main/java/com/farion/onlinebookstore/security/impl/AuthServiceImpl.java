@@ -1,6 +1,6 @@
 package com.farion.onlinebookstore.security.impl;
 
-import static com.farion.onlinebookstore.entity.Role.RoleName;
+import static com.farion.onlinebookstore.entity.Role.RoleName.ROLE_USER;
 
 import com.farion.onlinebookstore.dto.user.UserDto;
 import com.farion.onlinebookstore.dto.user.login.UserLoginRequestDto;
@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService {
-    private static final RoleName USER = RoleName.USER;
     private final UserService userService;
     private final RoleService roleService;
     private final UserMapper userMapper;
@@ -40,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
                     + requestDto.getEmail() + " already exist");
         }
         User user = userMapper.toModel(requestDto);
-        Role userRole = roleService.findByName(USER);
+        Role userRole = roleService.findByName(ROLE_USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Set.of(userRole));
         return userService.save(user);
