@@ -21,8 +21,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDto> findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .map(userMapper::toDto);
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

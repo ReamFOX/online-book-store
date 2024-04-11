@@ -1,9 +1,9 @@
 package com.farion.onlinebookstore.controller;
 
+import com.farion.onlinebookstore.dto.user.UserDto;
 import com.farion.onlinebookstore.dto.user.login.UserLoginRequestDto;
 import com.farion.onlinebookstore.dto.user.login.UserLoginResponseDto;
 import com.farion.onlinebookstore.dto.user.register.RegisterUserRequestDto;
-import com.farion.onlinebookstore.dto.user.UserDto;
 import com.farion.onlinebookstore.exception.RegistrationException;
 import com.farion.onlinebookstore.security.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
