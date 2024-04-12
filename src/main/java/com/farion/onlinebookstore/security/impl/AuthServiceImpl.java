@@ -12,10 +12,8 @@ import com.farion.onlinebookstore.exception.RegistrationException;
 import com.farion.onlinebookstore.mapper.UserMapper;
 import com.farion.onlinebookstore.repository.UserRepository;
 import com.farion.onlinebookstore.security.AuthService;
-import com.farion.onlinebookstore.service.RoleServ
-import com.farion.onlinebookstore.service.UserService;
+import com.farion.onlinebookstore.service.RoleService;
 import com.farion.onlinebookstore.util.JwtUtil;
-
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
