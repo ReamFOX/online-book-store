@@ -8,9 +8,9 @@ import com.farion.onlinebookstore.entity.Role;
 import com.farion.onlinebookstore.entity.User;
 import com.farion.onlinebookstore.exception.RegistrationException;
 import com.farion.onlinebookstore.mapper.UserMapper;
+import com.farion.onlinebookstore.repository.UserRepository;
 import com.farion.onlinebookstore.security.AuthService;
 import com.farion.onlinebookstore.service.RoleService;
-import com.farion.onlinebookstore.service.UserService;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,14 +19,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService {
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final RoleService roleService;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto register(RegisterUserRequestDto requestDto) throws RegistrationException {
-        if (userService.findByEmail(requestDto.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
             throw new RegistrationException("User with email "
                     + requestDto.getEmail() + " already exist");
         }
@@ -34,6 +34,6 @@ public class AuthServiceImpl implements AuthService {
         Role userRole = roleService.findByName(USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Set.of(userRole));
-        return userService.save(user);
+        return userMapper.toDto(userRepository.save(user));
     }
 }
