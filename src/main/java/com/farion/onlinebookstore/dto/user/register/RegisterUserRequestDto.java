@@ -1,4 +1,4 @@
-package com.farion.onlinebookstore.dto.user;
+package com.farion.onlinebookstore.dto.user.register;
 
 import com.farion.onlinebookstore.lib.FieldMatch;
 import jakarta.validation.constraints.Email;

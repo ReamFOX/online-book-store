@@ -1,7 +1,9 @@
 package com.farion.onlinebookstore.controller;
 
-import com.farion.onlinebookstore.dto.user.RegisterUserRequestDto;
 import com.farion.onlinebookstore.dto.user.UserDto;
+import com.farion.onlinebookstore.dto.user.login.UserLoginRequestDto;
+import com.farion.onlinebookstore.dto.user.login.UserLoginResponseDto;
+import com.farion.onlinebookstore.dto.user.register.RegisterUserRequestDto;
 import com.farion.onlinebookstore.exception.RegistrationException;
 import com.farion.onlinebookstore.security.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,5 +30,11 @@ public class AuthenticationController {
     public UserDto register(@RequestBody @Valid RegisterUserRequestDto requestDto)
             throws RegistrationException {
         return authService.register(requestDto);
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "Login as a user", description = "Endpoint for login as a user")
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
+        return authService.authenticate(requestDto);
     }
 }
