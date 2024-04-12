@@ -14,7 +14,7 @@ databaseChangeLog:
                     primaryKey: true
               - column:
                   name: name
-                  type: enum('ROLE_USER', 'ROLE_ADMIN')
+                  type: enum('USER', 'ADMIN')
                   constraints:
                     nullable: false
                     unique: true
