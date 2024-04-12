@@ -19,3 +19,5 @@ databaseChangeLog:
       file: db/changelog/changes/09-assign-roles-to-admin.yaml
   - include:
       file: db/changelog/changes/10-create-categories-table.yaml
+  - include:
+      file: db/changelog/changes/11-create-books-categories-table.yaml
