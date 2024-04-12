@@ -1,6 +1,7 @@
 package com.farion.onlinebookstore.service.impl;
 
 import com.farion.onlinebookstore.dto.book.BookDto;
+import com.farion.onlinebookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.farion.onlinebookstore.dto.book.BookSearchParameters;
 import com.farion.onlinebookstore.dto.book.CreateBookRequestDto;
 import com.farion.onlinebookstore.entity.Book;
@@ -10,6 +11,7 @@ import com.farion.onlinebookstore.repository.book.BookSpecificationBuilder;
 import com.farion.onlinebookstore.service.BookService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -66,6 +68,13 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll(bookSpecification, pageable)
                 .stream()
                 .map(bookMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<BookDtoWithoutCategoryIds> findAllByCategory(Long id) {
+        return bookRepository.findByCategories_Id(id).stream()
+                .map(bookMapper::toDtoWithoutCategories)
                 .toList();
     }
 }

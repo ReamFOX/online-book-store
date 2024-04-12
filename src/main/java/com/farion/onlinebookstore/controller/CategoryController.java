@@ -1,7 +1,9 @@
 package com.farion.onlinebookstore.controller;
 
+import com.farion.onlinebookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.farion.onlinebookstore.dto.category.CategoryDto;
 import com.farion.onlinebookstore.dto.category.CreateCategoryRequestDto;
+import com.farion.onlinebookstore.service.BookService;
 import com.farion.onlinebookstore.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/categories")
 public class CategoryController {
     private final CategoryService categoryService;
+    private final BookService bookService;
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -36,15 +39,22 @@ public class CategoryController {
         return categoryService.createCategory(requestDto);
     }
 
+    @GetMapping("/{id}/books")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @Operation(summary = "Get all books by category id", description = "Get a list of books by specific category id")
+    public List<BookDtoWithoutCategoryIds> getBooksByCategory(@PathVariable Long id) {
+        return bookService.findAllByCategory(id);
+    }
+
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Operation(summary = "Get category by id", description = "Get category by specific id")
     public CategoryDto findById(@PathVariable Long id) {
         return categoryService.getById(id);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Operation(summary = "Get all categories", description = "Get a list of all available categories")
     public List<CategoryDto> findAll(Pageable pageable) {
         return categoryService.findAll(pageable);
