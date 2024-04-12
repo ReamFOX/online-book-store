@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class CreateCategoryRequestDto {
     @NotBlank
-    @Size(max = 255, message = "Title can`t be longer than 255 characters")
+    @Size(max = 255, message = "Category name can`t be longer than 255 characters")
     private String name;
-    @Size(max = 255, message = "Title can`t be longer than 255 characters")
+    @Size(max = 255, message = "Category description can`t be longer than 255 characters")
     private String description;
 }

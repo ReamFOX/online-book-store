@@ -8,6 +8,7 @@ import com.farion.onlinebookstore.repository.CategoryRepository;
 import com.farion.onlinebookstore.service.CategoryService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteById(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Set<Long> getAllCategoryIds() {
+        return categoryRepository.findAllIds();
     }
 }

@@ -5,7 +5,9 @@ import com.farion.onlinebookstore.dto.book.BookDto;
 import com.farion.onlinebookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.farion.onlinebookstore.dto.book.CreateBookRequestDto;
 import com.farion.onlinebookstore.entity.Book;
-import java.util.List;
+import com.farion.onlinebookstore.entity.Category;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,6 +18,13 @@ public interface BookMapper {
     @Mapping(target = "categoryIds", ignore = true)
     BookDto toDto(Book book);
 
+    @AfterMapping
+    default void setSubjectIds(@MappingTarget BookDto bookDto, Book book) {
+        Set<Long> categoryIds = book.getCategories().stream()
+                .map(Category::getId).collect(Collectors.toSet());
+        bookDto.setCategoryIds(categoryIds);
+    }
+
     @Mapping(target = "categories", ignore = true)
     Book toModel(CreateBookRequestDto requestDto);
 
@@ -23,11 +32,9 @@ public interface BookMapper {
 
     @AfterMapping
     default void setCategoryIds(@MappingTarget Book book, CreateBookRequestDto requestDto) {
-        List<Book> books = requestDto.getCategories().stream()
-                .map(Book::new)
-                .toList();
-        books.set
+        Set<Category> categories = requestDto.getCategories().stream()
+                .map(Category::new)
+                .collect(Collectors.toSet());
+        book.setCategories(categories);
     }
-
-
 }

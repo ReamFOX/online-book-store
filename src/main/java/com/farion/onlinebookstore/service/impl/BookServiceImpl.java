@@ -11,7 +11,6 @@ import com.farion.onlinebookstore.repository.book.BookSpecificationBuilder;
 import com.farion.onlinebookstore.service.BookService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

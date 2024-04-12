@@ -1,11 +1,12 @@
 package com.farion.onlinebookstore.dto.book;
 
+import com.farion.onlinebookstore.lib.CategoryIds;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 import lombok.Data;
 import org.hibernate.validator.constraints.ISBN;
 import org.hibernate.validator.constraints.URL;
@@ -24,11 +25,11 @@ public class CreateBookRequestDto {
     @NotNull
     @DecimalMin(value = "0.00", inclusive = false, message = "Price can't be 0 or less")
     private BigDecimal price;
-    @Size(max = 255, message = "Description can`t be longer than 255 characters")
+    @Size(max = 255, message = "Book description can`t be longer than 255 characters")
     private String description;
     @URL(message = "invalid url")
     @Size(max = 255, message = "URL for cover image can`t be longer than 255 characters")
     private String coverImage;
-
-    private List<Long> categories;
+    @CategoryIds
+    private Set<Long> categories;
 }
