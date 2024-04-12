@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-table-users-roles
+      id: create-users-roles-table
       author: farion
       changes:
         - createTable:
@@ -11,12 +11,12 @@ databaseChangeLog:
                   type: BIGINT
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_roles_id
+                    foreignKeyName: fk_role_id
                     references: roles(id)
               - column:
                   name: user_id
                   type: BIGINT
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_users_id
+                    foreignKeyName: fk_user_id
                     references: users(id)
