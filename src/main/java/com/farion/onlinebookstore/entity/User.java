@@ -1,6 +1,5 @@
 package com.farion.onlinebookstore.entity;
 
-import com.farion.onlinebookstore.util.ParameterNames;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -53,7 +52,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
                 .map(role ->
-                        new SimpleGrantedAuthority(ParameterNames.ROLE + role.getName().name()))
+                        new SimpleGrantedAuthority(role.getAuthority()))
                 .collect(Collectors.toSet());
     }
 
