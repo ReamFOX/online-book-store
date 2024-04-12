@@ -1,8 +1,6 @@
 package com.farion.onlinebookstore.entity;
 
-import static com.farion.onlinebookstore.entity.Role.RoleName.ROLE_ADMIN;
-import static com.farion.onlinebookstore.entity.Role.RoleName.ROLE_USER;
-
+import com.farion.onlinebookstore.util.ParameterNames;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,8 +12,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -53,16 +51,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        for (Role role : roles) {
-            switch (role.getName()) {
-                case ROLE_ADMIN -> authorities.add(new SimpleGrantedAuthority(ROLE_ADMIN.name()));
-                case ROLE_USER -> authorities.add(new SimpleGrantedAuthority(ROLE_USER.name()));
-                default ->
-                        throw new IllegalArgumentException("Unsupported role: " + role.getName());
-            }
-        }
-        return authorities;
+        return roles.stream()
+                .map(role ->
+                        new SimpleGrantedAuthority(ParameterNames.ROLE + role.getName().name()))
+                .collect(Collectors.toSet());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.farion.onlinebookstore.security.impl;
 
-import static com.farion.onlinebookstore.entity.Role.RoleName.ROLE_USER;
+import static com.farion.onlinebookstore.entity.Role.RoleName.USER;
 
 import com.farion.onlinebookstore.dto.user.RegisterUserRequestDto;
 import com.farion.onlinebookstore.dto.user.UserDto;
@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
                     + requestDto.getEmail() + " already exist");
         }
         User user = userMapper.toModel(requestDto);
-        Role userRole = roleService.findByName(ROLE_USER);
+        Role userRole = roleService.findByName(USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Set.of(userRole));
         return userService.save(user);
