@@ -15,26 +15,20 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
-    @Mapping(target = "categoryIds", ignore = true)
-    BookDto toDto(Book book);
 
-    @AfterMapping
-    default void setSubjectIds(@MappingTarget BookDto bookDto, Book book) {
-        Set<Long> categoryIds = book.getCategories().stream()
-                .map(Category::getId).collect(Collectors.toSet());
-        bookDto.setCategoryIds(categoryIds);
-    }
+    BookDto toDto(Book book);
 
     @Mapping(target = "categories", ignore = true)
     Book toModel(CreateBookRequestDto requestDto);
 
-    BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
-
     @AfterMapping
     default void setCategoryIds(@MappingTarget Book book, CreateBookRequestDto requestDto) {
-        Set<Category> categories = requestDto.getCategories().stream()
+        Set<Category> categories = requestDto.getCategories()
+                .stream()
                 .map(Category::new)
                 .collect(Collectors.toSet());
         book.setCategories(categories);
     }
+
+    BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
 }

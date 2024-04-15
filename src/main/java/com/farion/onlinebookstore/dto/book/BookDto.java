@@ -1,5 +1,6 @@
 package com.farion.onlinebookstore.dto.book;
 
+import com.farion.onlinebookstore.entity.Category;
 import java.math.BigDecimal;
 import java.util.Set;
 import lombok.Data;
@@ -10,8 +11,8 @@ public class BookDto {
     private String title;
     private String author;
     private String isbn;
-    private Set<Long> categoryIds;
+    private Set<Category> categories;
     private BigDecimal price;
     private String description;
-    private String coverImag;
+    private String coverImage;
 }

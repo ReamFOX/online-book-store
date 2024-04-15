@@ -2,23 +2,22 @@ package com.farion.onlinebookstore.validator;
 
 import com.farion.onlinebookstore.lib.CategoryIds;
 import com.farion.onlinebookstore.service.CategoryService;
+import com.farion.onlinebookstore.util.ConditionHolder;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
 public class CategoryIdsValidator implements ConstraintValidator<CategoryIds, Set<Long>> {
-    @Setter
-    private Set<Long> allCategoryIds;
+    private final ConditionHolder conditionHolder;
     private final CategoryService categoryService;
 
     @Override
     public void initialize(CategoryIds constraintAnnotation) {
-        allCategoryIds = categoryService.getAllCategoryIds();
+        conditionHolder.setCondition(categoryService.getAllCategoryIds());
     }
 
     @Override
@@ -26,7 +25,7 @@ public class CategoryIdsValidator implements ConstraintValidator<CategoryIds, Se
             Set<Long> categoryIds,
             ConstraintValidatorContext constraintValidatorContext
     ) {
-        return allCategoryIds.containsAll(categoryIds);
+        return conditionHolder.getCondition().containsAll(categoryIds);
     }
 
 }

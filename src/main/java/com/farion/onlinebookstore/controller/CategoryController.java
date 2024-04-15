@@ -5,7 +5,7 @@ import com.farion.onlinebookstore.dto.category.CategoryDto;
 import com.farion.onlinebookstore.dto.category.CreateCategoryRequestDto;
 import com.farion.onlinebookstore.service.BookService;
 import com.farion.onlinebookstore.service.CategoryService;
-import com.farion.onlinebookstore.validator.CategoryIdsValidator;
+import com.farion.onlinebookstore.util.ConditionHolder;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -31,15 +31,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
     private final CategoryService categoryService;
     private final BookService bookService;
-    private final CategoryIdsValidator categoryIdsValidator;
+    private final ConditionHolder conditionHolder;
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new category", description = "Create a new category for books")
     public CategoryDto save(@RequestBody @Valid CreateCategoryRequestDto requestDto) {
-        categoryIdsValidator.setAllCategoryIds(categoryService.getAllCategoryIds());
-        return categoryService.createCategory(requestDto);
+        CategoryDto newCategory = categoryService.createCategory(requestDto);
+        conditionHolder.setCondition(categoryService.getAllCategoryIds());
+        return newCategory;
     }
 
     @GetMapping("/{id}/books")
@@ -72,6 +73,7 @@ public class CategoryController {
             description = "Soft delete category by specific id")
     public void delete(@PathVariable Long id) {
         categoryService.deleteById(id);
+        conditionHolder.setCondition(categoryService.getAllCategoryIds());
     }
 
     @PutMapping("/{id}")

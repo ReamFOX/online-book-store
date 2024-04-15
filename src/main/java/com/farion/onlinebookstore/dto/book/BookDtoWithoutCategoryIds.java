@@ -11,5 +11,5 @@ public class BookDtoWithoutCategoryIds {
     private String isbn;
     private BigDecimal price;
     private String description;
-    private String coverImag;
+    private String coverImage;
 }
