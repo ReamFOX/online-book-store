@@ -10,5 +10,5 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class ConditionHolder {
-    private Set<Long> condition = new HashSet<>();
+    private ThreadLocal<Set<Long>> condition = ThreadLocal.withInitial(HashSet::new);
 }

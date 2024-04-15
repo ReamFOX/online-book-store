@@ -17,7 +17,7 @@ public class CategoryIdsValidator implements ConstraintValidator<CategoryIds, Se
 
     @Override
     public void initialize(CategoryIds constraintAnnotation) {
-        conditionHolder.setCondition(categoryService.getAllCategoryIds());
+        conditionHolder.setCondition(ThreadLocal.withInitial(categoryService::getAllCategoryIds));
     }
 
     @Override
@@ -25,7 +25,6 @@ public class CategoryIdsValidator implements ConstraintValidator<CategoryIds, Se
             Set<Long> categoryIds,
             ConstraintValidatorContext constraintValidatorContext
     ) {
-        return conditionHolder.getCondition().containsAll(categoryIds);
+        return conditionHolder.getCondition().get().containsAll(categoryIds);
     }
-
 }

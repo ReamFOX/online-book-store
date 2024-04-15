@@ -4,11 +4,13 @@ import com.farion.onlinebookstore.dto.book.BookDto;
 import com.farion.onlinebookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.farion.onlinebookstore.dto.book.BookSearchParameters;
 import com.farion.onlinebookstore.dto.book.CreateBookRequestDto;
+import com.farion.onlinebookstore.dto.category.CategoryDto;
 import com.farion.onlinebookstore.entity.Book;
 import com.farion.onlinebookstore.mapper.BookMapper;
 import com.farion.onlinebookstore.repository.book.BookRepository;
 import com.farion.onlinebookstore.repository.book.BookSpecificationBuilder;
 import com.farion.onlinebookstore.service.BookService;
+import com.farion.onlinebookstore.service.CategoryService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +22,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+    private final CategoryService categoryService;
     private final BookMapper bookMapper;
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
     public BookDto createBook(CreateBookRequestDto requestDto) {
         Book book = bookMapper.toModel(requestDto);
+        book.getCategories().forEach(category -> {
+            CategoryDto categoryDto = categoryService.getById(category.getId());
+            category.setName(categoryDto.name());
+            category.setDescription(categoryDto.description());
+        });
         return bookMapper.toDto(bookRepository.save(book));
     }
 

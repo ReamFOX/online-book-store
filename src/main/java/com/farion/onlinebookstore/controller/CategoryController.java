@@ -39,7 +39,7 @@ public class CategoryController {
     @Operation(summary = "Create a new category", description = "Create a new category for books")
     public CategoryDto save(@RequestBody @Valid CreateCategoryRequestDto requestDto) {
         CategoryDto newCategory = categoryService.createCategory(requestDto);
-        conditionHolder.setCondition(categoryService.getAllCategoryIds());
+        conditionHolder.setCondition(ThreadLocal.withInitial(categoryService::getAllCategoryIds));
         return newCategory;
     }
 
@@ -73,7 +73,7 @@ public class CategoryController {
             description = "Soft delete category by specific id")
     public void delete(@PathVariable Long id) {
         categoryService.deleteById(id);
-        conditionHolder.setCondition(categoryService.getAllCategoryIds());
+        conditionHolder.setCondition(ThreadLocal.withInitial(categoryService::getAllCategoryIds));
     }
 
     @PutMapping("/{id}")

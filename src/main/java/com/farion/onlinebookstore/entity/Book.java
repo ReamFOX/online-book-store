@@ -33,7 +33,7 @@ public class Book {
     private String author;
     @Column(nullable = false, unique = true)
     private String isbn;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JoinTable(
