@@ -1,0 +1,86 @@
+databaseChangeLog:
+  - changeSet:
+      id: assign-categories-to-books
+      author: farion
+      changes:
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'To Kill a Mockingbird')"
+              - column:
+                  name: category_id
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Classic')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = '1984')"
+              - column:
+                  name: category_id
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Science Fiction')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'The Catcher in the Rye')"
+              - column:
+                  name: category_id
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Novel')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Pride and Prejudice')"
+              - column:
+                  name: category_id
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Classic')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'The Great Gatsby')"
+              - column:
+                  name: category_id
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Novel')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'To the Lighthouse')"
+              - column:
+                  name: category_id
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Novel')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Moby-Dick')"
+              - column:
+                  name: category_id
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Adventure')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Brave New World')"
+              - column:
+                  name: category_id
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Dystopia')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'The Lord of the Rings')"
+              - column:
+                  name: category_id
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Fantasy')"

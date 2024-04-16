@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-categories
+      author: farion
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column: {name: name, value: "Novel"}
+              - column: {name: description, value: "Books by various authors that tell a story of love or contain romantic elements."}
+        - insert:
+            tableName: categories
+            columns:
+              - column: {name: name, value: "Science Fiction"}
+              - column: {name: description, value: "Books based on imagination and fantasy, often grounded in scientific or technological concepts."}
+        - insert:
+            tableName: categories
+            columns:
+              - column: {name: name, value: "Classic"}
+              - column: {name: description, value: "Famous and popular books considered classics of literature."}
+        - insert:
+            tableName: categories
+            columns:
+              - column: {name: name, value: "Detective"}
+              - column: {name: description, value: "Books that investigate a crime, often involving suspenseful and societal elements."}
+        - insert:
+            tableName: categories
+            columns:
+              - column: {name: name, value: "Adventure"}
+              - column: {name: description, value: "Books that tell thrilling events and journeys."}
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Fiction" }
+              - column: { name: description, value: "A genre of literature that includes imaginative or invented stories, often set in the real world." }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Dystopia" }
+              - column: { name: description, value: "Books that depict a society characterized by human misery, oppression, and degradation." }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Fantasy" }
+              - column: { name: description, value: "A genre of speculative fiction set in a fictional universe, often inspired by myth, legend, or folklore, and featuring magic or supernatural elements." }
