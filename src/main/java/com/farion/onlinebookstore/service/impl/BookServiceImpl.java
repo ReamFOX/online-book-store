@@ -4,15 +4,17 @@ import com.farion.onlinebookstore.dto.book.BookDto;
 import com.farion.onlinebookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.farion.onlinebookstore.dto.book.BookSearchParameters;
 import com.farion.onlinebookstore.dto.book.CreateBookRequestDto;
-import com.farion.onlinebookstore.dto.category.CategoryDto;
 import com.farion.onlinebookstore.entity.Book;
+import com.farion.onlinebookstore.exception.InvalidCategoryIdsException;
 import com.farion.onlinebookstore.mapper.BookMapper;
 import com.farion.onlinebookstore.repository.book.BookRepository;
 import com.farion.onlinebookstore.repository.book.BookSpecificationBuilder;
 import com.farion.onlinebookstore.service.BookService;
 import com.farion.onlinebookstore.service.CategoryService;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,12 +30,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto createBook(CreateBookRequestDto requestDto) {
+        Set<Long> invalidCategoryIds = getInvalidCategoryIds(requestDto.getCategories());
+        if (!invalidCategoryIds.isEmpty()) {
+            throw new InvalidCategoryIdsException("Invalid category ids: " + invalidCategoryIds);
+        }
         Book book = bookMapper.toModel(requestDto);
-        book.getCategories().forEach(category -> {
-            CategoryDto categoryDto = categoryService.getById(category.getId());
-            category.setName(categoryDto.name());
-            category.setDescription(categoryDto.description());
-        });
+
         return bookMapper.toDto(bookRepository.save(book));
     }
 
@@ -83,5 +85,16 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findByCategories_Id(id).stream()
                 .map(bookMapper::toDtoWithoutCategories)
                 .toList();
+    }
+
+    private Set<Long> getInvalidCategoryIds(Set<Long> categoryIds) {
+        Set<Long> allCategoryIds = categoryService.getAllCategoryIds();
+        Set<Long> invalidCategoryIds = new HashSet<>();
+        categoryIds.forEach(id -> {
+            if (!allCategoryIds.contains(id)) {
+                invalidCategoryIds.add(id);
+            }
+        });
+        return invalidCategoryIds;
     }
 }

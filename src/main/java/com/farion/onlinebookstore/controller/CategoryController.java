@@ -5,7 +5,6 @@ import com.farion.onlinebookstore.dto.category.CategoryDto;
 import com.farion.onlinebookstore.dto.category.CreateCategoryRequestDto;
 import com.farion.onlinebookstore.service.BookService;
 import com.farion.onlinebookstore.service.CategoryService;
-import com.farion.onlinebookstore.util.ConditionHolder;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -31,16 +30,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
     private final CategoryService categoryService;
     private final BookService bookService;
-    private final ConditionHolder conditionHolder;
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new category", description = "Create a new category for books")
     public CategoryDto save(@RequestBody @Valid CreateCategoryRequestDto requestDto) {
-        CategoryDto newCategory = categoryService.createCategory(requestDto);
-        conditionHolder.setCondition(ThreadLocal.withInitial(categoryService::getAllCategoryIds));
-        return newCategory;
+        return categoryService.createCategory(requestDto);
     }
 
     @GetMapping("/{id}/books")
@@ -73,7 +69,6 @@ public class CategoryController {
             description = "Soft delete category by specific id")
     public void delete(@PathVariable Long id) {
         categoryService.deleteById(id);
-        conditionHolder.setCondition(ThreadLocal.withInitial(categoryService::getAllCategoryIds));
     }
 
     @PutMapping("/{id}")

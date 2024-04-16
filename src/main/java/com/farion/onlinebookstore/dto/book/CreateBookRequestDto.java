@@ -1,8 +1,8 @@
 package com.farion.onlinebookstore.dto.book;
 
-import com.farion.onlinebookstore.lib.CategoryIds;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -30,6 +30,7 @@ public class CreateBookRequestDto {
     @URL(message = "invalid url")
     @Size(max = 255, message = "URL for cover image can`t be longer than 255 characters")
     private String coverImage;
-    @CategoryIds
+    @NotEmpty(message = "Category can not be empty")
+    @Size(min = 1, message = "Book must have at least 1 category")
     private Set<Long> categories;
 }
