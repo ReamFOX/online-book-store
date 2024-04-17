@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @Entity
+@NoArgsConstructor
 @SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id=?")
 @SQLRestriction("is_deleted=false")
 @Table(name = "users")
@@ -47,6 +49,10 @@ public class User implements UserDetails {
     private Set<Role> roles;
     @Column(nullable = false)
     private boolean isDeleted = false;
+
+    public User(long id) {
+        this.id = id;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

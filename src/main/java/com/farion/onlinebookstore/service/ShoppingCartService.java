@@ -1,6 +1,7 @@
 package com.farion.onlinebookstore.service;
 
 import com.farion.onlinebookstore.dto.ShoppingCartDto;
+import com.farion.onlinebookstore.entity.ShoppingCart;
 import com.farion.onlinebookstore.entity.User;
 
 public interface ShoppingCartService {
@@ -9,4 +10,6 @@ public interface ShoppingCartService {
     void registerNewShoppingCart(User user);
 
     void clearShoppingCart(String email);
+
+    void updateCart(ShoppingCart cart);
 }

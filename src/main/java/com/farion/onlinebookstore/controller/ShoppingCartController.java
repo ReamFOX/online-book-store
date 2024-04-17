@@ -1,11 +1,14 @@
 package com.farion.onlinebookstore.controller;
 
 import com.farion.onlinebookstore.dto.ShoppingCartDto;
+import com.farion.onlinebookstore.dto.item.CartItemDto;
+import com.farion.onlinebookstore.dto.item.CreateCartItemRequestDto;
 import com.farion.onlinebookstore.entity.CartItem;
 import com.farion.onlinebookstore.service.CartItemService;
 import com.farion.onlinebookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,15 +46,18 @@ public class ShoppingCartController {
     @Operation(summary = "Add book to the cart",
             description = "Adding book to the shopping cart")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public CartItem addBookToCart(@RequestBody CartItem cartItem) {
-        return itemService.save(cartItem);
+    public CartItemDto addBookToCart(@RequestBody @Valid CreateCartItemRequestDto requestDto) {
+        Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
+        return itemService.save(requestDto, authentication.getName());
     }
 
     @PutMapping("/cart-items/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @Operation(summary = "Update quantity of a book",
             description = "Update quantity of a book in the shopping cart")
-    public CartItem updateQuantity(@PathVariable Long id, @RequestBody CartItem cartItem) {
+    public CartItem updateQuantity(@PathVariable Long id,
+                                   @Valid @RequestBody CreateCartItemRequestDto requestDto) {
         return null;
     }
 
@@ -70,7 +76,7 @@ public class ShoppingCartController {
     @Operation(summary = "Clear shopping cart",
             description = "Clears the shopping cart of the current user")
     public void clearCart() {
-        Authentication authentication = SecurityContextHolder.createEmptyContext()
+        Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
         cartService.clearShoppingCart(authentication.getName());
     }

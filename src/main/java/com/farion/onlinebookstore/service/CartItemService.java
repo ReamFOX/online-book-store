@@ -1,9 +1,8 @@
 package com.farion.onlinebookstore.service;
 
-import com.farion.onlinebookstore.entity.CartItem;
+import com.farion.onlinebookstore.dto.item.CartItemDto;
+import com.farion.onlinebookstore.dto.item.CreateCartItemRequestDto;
 
 public interface CartItemService {
-    CartItem save(CartItem cartItem);
-
-
+    CartItemDto save(CreateCartItemRequestDto requestDto, String email);
 }

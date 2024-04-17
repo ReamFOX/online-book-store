@@ -29,7 +29,7 @@ public class ShoppingCart {
     @OneToOne
     @MapsId
     private User user;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "shoppingCartDto")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "shoppingCart")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<CartItem> cartItems;
