@@ -1,7 +1,7 @@
 package com.farion.onlinebookstore.controller;
 
+import com.farion.onlinebookstore.dto.ShoppingCartDto;
 import com.farion.onlinebookstore.entity.CartItem;
-import com.farion.onlinebookstore.entity.ShoppingCart;
 import com.farion.onlinebookstore.service.CartItemService;
 import com.farion.onlinebookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +33,7 @@ public class ShoppingCartController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @Operation(summary = "Get user shopping cart",
             description = "To get the current user's shopping cart")
-    public ShoppingCart getCart() {
+    public ShoppingCartDto getCart() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return cartService.getByUserEmail(authentication.getName());
     }
@@ -59,8 +59,19 @@ public class ShoppingCartController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @Operation(summary = "Remove book from cart",
-            description = "Remove a book from the shopping cart")
+            description = "Remove a book from the shopping cart of current user")
     public void deleteBookFromCart(@PathVariable Long id) {
 
+    }
+
+    @DeleteMapping("/clear")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @Operation(summary = "Clear shopping cart",
+            description = "Clears the shopping cart of the current user")
+    public void clearCart() {
+        Authentication authentication = SecurityContextHolder.createEmptyContext()
+                .getAuthentication();
+        cartService.clearShoppingCart(authentication.getName());
     }
 }

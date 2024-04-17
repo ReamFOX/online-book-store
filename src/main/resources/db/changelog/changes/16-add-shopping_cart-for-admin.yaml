@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-shopping_cart-for-admin
+      author: farion
+      changes:
+        - insert:
+            tableName: shopping_carts
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: "(SELECT id FROM users WHERE email = 'sasha@gmail.com')"

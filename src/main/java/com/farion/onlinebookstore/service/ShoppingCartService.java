@@ -1,12 +1,12 @@
 package com.farion.onlinebookstore.service;
 
-import com.farion.onlinebookstore.entity.ShoppingCart;
+import com.farion.onlinebookstore.dto.ShoppingCartDto;
 import com.farion.onlinebookstore.entity.User;
 
 public interface ShoppingCartService {
-    ShoppingCart getByUserEmail(String email);
+    ShoppingCartDto getByUserEmail(String email);
 
     void registerNewShoppingCart(User user);
 
-    void clearShoppingCart(ShoppingCart cart);
+    void clearShoppingCart(String email);
 }

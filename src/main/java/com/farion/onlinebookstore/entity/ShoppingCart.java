@@ -1,6 +1,6 @@
 package com.farion.onlinebookstore.entity;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -14,10 +14,14 @@ import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Data
 @Entity
-@Table(name = "shopping_cart")
+@SQLDelete(sql = "UPDATE shopping_carts SET is_deleted = true WHERE id=?")
+@SQLRestriction("is_deleted=false")
+@Table(name = "shopping_carts")
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +29,10 @@ public class ShoppingCart {
     @OneToOne
     @MapsId
     private User user;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "shoppingCartDto")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<CartItem> cartItems;
+    @Column(nullable = false)
+    private boolean isDeleted = false;
 }
