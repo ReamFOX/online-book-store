@@ -28,11 +28,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void registerNewShoppingCart(User user) {
         ShoppingCart cart = new ShoppingCart();
         cart.setUser(user);
-        cartRepository.save(cart);
+        updateCart(cart);
     }
 
     @Override
-    public void clearShoppingCart(String email) {
+    public void clearShoppingCartByEmail(String email) {
         ShoppingCart cart = getCartByEmail(email);
         cartItemRepository.deleteAll(cart.getCartItems());
         cart.setCartItems(new HashSet<>());

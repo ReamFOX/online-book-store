@@ -64,6 +64,11 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return getDefTemplate(e, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<Object> handleItemNotFoundException(ItemNotFoundException e) {
+        return getDefTemplate(e, HttpStatus.NOT_FOUND);
+    }
+
     private ResponseEntity<Object> getDefTemplate(Throwable e, HttpStatus status) {
         body.put(TIMESTAMP, LocalDateTime.now());
         body.put(STATUS, status);

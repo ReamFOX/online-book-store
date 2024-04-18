@@ -1,5 +1,6 @@
 package com.farion.onlinebookstore.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +20,7 @@ import org.hibernate.annotations.SQLRestriction;
 
 @Data
 @Entity
-@SQLDelete(sql = "UPDATE shopping_carts SET is_deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE shopping_carts SET is_deleted = true WHERE user_id=?")
 @SQLRestriction("is_deleted=false")
 @Table(name = "shopping_carts")
 public class ShoppingCart {
@@ -29,7 +30,7 @@ public class ShoppingCart {
     @OneToOne
     @MapsId
     private User user;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "shoppingCart")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingCart", cascade = CascadeType.REMOVE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<CartItem> cartItems;

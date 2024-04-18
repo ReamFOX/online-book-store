@@ -3,7 +3,7 @@ package com.farion.onlinebookstore.controller;
 import com.farion.onlinebookstore.dto.ShoppingCartDto;
 import com.farion.onlinebookstore.dto.item.CartItemDto;
 import com.farion.onlinebookstore.dto.item.CreateCartItemRequestDto;
-import com.farion.onlinebookstore.entity.CartItem;
+import com.farion.onlinebookstore.dto.item.UpdateCartItemDto;
 import com.farion.onlinebookstore.service.CartItemService;
 import com.farion.onlinebookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,16 +49,18 @@ public class ShoppingCartController {
     public CartItemDto addBookToCart(@RequestBody @Valid CreateCartItemRequestDto requestDto) {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
-        return itemService.save(requestDto, authentication.getName());
+        return itemService.saveByEmail(requestDto, authentication.getName());
     }
 
     @PutMapping("/cart-items/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @Operation(summary = "Update quantity of a book",
             description = "Update quantity of a book in the shopping cart")
-    public CartItem updateQuantity(@PathVariable Long id,
-                                   @Valid @RequestBody CreateCartItemRequestDto requestDto) {
-        return null;
+    public CartItemDto updateQuantity(@PathVariable Long id,
+                                   @Valid @RequestBody UpdateCartItemDto requestDto) {
+        Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
+        return itemService.updateByEmail(id, authentication.getName(), requestDto);
     }
 
     @DeleteMapping("/cart-items/{id}")
@@ -67,7 +69,9 @@ public class ShoppingCartController {
     @Operation(summary = "Remove book from cart",
             description = "Remove a book from the shopping cart of current user")
     public void deleteBookFromCart(@PathVariable Long id) {
-
+        Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
+        itemService.deleteByEmail(id, authentication.getName());
     }
 
     @DeleteMapping("/clear")
@@ -78,6 +82,6 @@ public class ShoppingCartController {
     public void clearCart() {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
-        cartService.clearShoppingCart(authentication.getName());
+        cartService.clearShoppingCartByEmail(authentication.getName());
     }
 }
