@@ -6,13 +6,13 @@ import com.farion.onlinebookstore.dto.item.UpdateCartItemDto;
 import com.farion.onlinebookstore.entity.Book;
 import com.farion.onlinebookstore.entity.CartItem;
 import com.farion.onlinebookstore.entity.ShoppingCart;
-import com.farion.onlinebookstore.exception.ItemNotFoundException;
 import com.farion.onlinebookstore.mapper.CartItemMapper;
 import com.farion.onlinebookstore.mapper.CartMapper;
 import com.farion.onlinebookstore.repository.CartItemRepository;
 import com.farion.onlinebookstore.repository.book.BookRepository;
 import com.farion.onlinebookstore.service.CartItemService;
 import com.farion.onlinebookstore.service.ShoppingCartService;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class CartItemServiceImpl implements CartItemService {
     public CartItemDto saveByEmail(CreateCartItemRequestDto requestDto, String email) {
         ShoppingCart cart = cartMapper.toEntity(shoppingCartService.getByUserEmail(email));
         Book book = bookRepository.findById(requestDto.getBookId()).orElseThrow(
-                () -> new ItemNotFoundException("Book with id "
+                () -> new EntityNotFoundException("Book with id "
                         + requestDto.getBookId() + " doesn't exist"));
         Optional<CartItem> itemInCartOptional = cart.getCartItems().stream()
                 .filter(item -> item.getBook().getTitle().equals(book.getTitle()))
@@ -70,7 +70,7 @@ public class CartItemServiceImpl implements CartItemService {
         boolean isPresent = cartItems.stream()
                 .anyMatch(item -> item.getId().equals(id));
         if (!isPresent) {
-            throw new ItemNotFoundException("Item with id " + id
+            throw new EntityNotFoundException("Item with id " + id
                     + " not in your shopping cart");
         }
     }
