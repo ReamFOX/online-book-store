@@ -34,6 +34,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartMapper.toDto(getCartByUserId(id));
     }
 
+    @Transactional
     @Override
     public CartItemDto addToCart(CreateCartItemRequestDto requestDto, Long id) {
         ShoppingCart cart = getCartByUserId(id);
@@ -61,7 +62,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return cartItemService.updateByUserId(itemId, userId, updateDto);
     }
 
-    @Transactional
     @Override
     public void deleteItemByUserId(Long itemId, Long userId) {
         checkExistingInCart(itemId, userId);

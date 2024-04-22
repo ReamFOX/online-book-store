@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,9 +34,7 @@ public class ShoppingCartController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @Operation(summary = "Get user shopping cart",
             description = "To get the current user's shopping cart")
-    public ShoppingCartDto getCart() {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+    public ShoppingCartDto getCart(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return cartService.getByUserId(user.getId());
     }
@@ -47,9 +44,8 @@ public class ShoppingCartController {
     @Operation(summary = "Add book to the cart",
             description = "Adding book to the shopping cart")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public CartItemDto addBookToCart(@RequestBody @Valid CreateCartItemRequestDto requestDto) {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+    public CartItemDto addBookToCart(@RequestBody @Valid CreateCartItemRequestDto requestDto,
+                                     Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return cartService.addToCart(requestDto, user.getId());
     }
@@ -59,9 +55,8 @@ public class ShoppingCartController {
     @Operation(summary = "Update quantity of a book",
             description = "Update quantity of a book in the shopping cart")
     public CartItemDto updateQuantity(@PathVariable Long id,
-                                   @Valid @RequestBody UpdateCartItemDto requestDto) {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+                                   @Valid @RequestBody UpdateCartItemDto requestDto,
+                                      Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return cartService.updateItemByUserId(id, user.getId(), requestDto);
     }
@@ -71,9 +66,7 @@ public class ShoppingCartController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @Operation(summary = "Remove book from cart",
             description = "Remove a book from the shopping cart of current user")
-    public void deleteBookFromCart(@PathVariable Long id) {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+    public void deleteBookFromCart(@PathVariable Long id, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         cartService.deleteItemByUserId(id, user.getId());
     }
@@ -83,9 +76,7 @@ public class ShoppingCartController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @Operation(summary = "Clear shopping cart",
             description = "Clears the shopping cart of the current user")
-    public void clearCart() {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+    public void clearCart(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         cartService.clearShoppingCartByUserId(user.getId());
     }
