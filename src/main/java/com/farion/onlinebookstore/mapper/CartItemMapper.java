@@ -20,21 +20,10 @@ public interface CartItemMapper {
     @Mapping(target = "book", source = "bookId", qualifiedByName = "bookFromId")
     CartItem toModel(CreateCartItemRequestDto requestDto);
 
-    @Mapping(source = "bookId", target = "book.id")
-    @Mapping(source = "bookTitle", target = "book.title")
-    CartItem toEntity(CartItemDto itemDto);
-
     @Named("fromItemsToDtos")
     default Set<CartItemDto> fromItemsToDtos(Set<CartItem> items) {
         return items.stream()
                 .map(this::toDto)
-                .collect(Collectors.toSet());
-    }
-
-    @Named("fromDtosToItems")
-    default Set<CartItem> fromDtosToItems(Set<CartItemDto> itemDtos) {
-        return itemDtos.stream()
-                .map(this::toEntity)
                 .collect(Collectors.toSet());
     }
 }

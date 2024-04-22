@@ -1,6 +1,5 @@
 package com.farion.onlinebookstore.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,7 +29,7 @@ public class ShoppingCart {
     @OneToOne
     @MapsId
     private User user;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingCart", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingCart")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<CartItem> cartItems;

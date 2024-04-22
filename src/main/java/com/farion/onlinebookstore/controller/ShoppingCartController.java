@@ -4,7 +4,7 @@ import com.farion.onlinebookstore.dto.ShoppingCartDto;
 import com.farion.onlinebookstore.dto.item.CartItemDto;
 import com.farion.onlinebookstore.dto.item.CreateCartItemRequestDto;
 import com.farion.onlinebookstore.dto.item.UpdateCartItemDto;
-import com.farion.onlinebookstore.service.CartItemService;
+import com.farion.onlinebookstore.entity.User;
 import com.farion.onlinebookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,15 +30,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/cart")
 public class ShoppingCartController {
     private final ShoppingCartService cartService;
-    private final CartItemService itemService;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @Operation(summary = "Get user shopping cart",
             description = "To get the current user's shopping cart")
     public ShoppingCartDto getCart() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return cartService.getByUserEmail(authentication.getName());
+        Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        return cartService.getByUserId(user.getId());
     }
 
     @PostMapping
@@ -49,7 +50,8 @@ public class ShoppingCartController {
     public CartItemDto addBookToCart(@RequestBody @Valid CreateCartItemRequestDto requestDto) {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
-        return itemService.saveByEmail(requestDto, authentication.getName());
+        User user = (User) authentication.getPrincipal();
+        return cartService.addToCart(requestDto, user.getId());
     }
 
     @PutMapping("/cart-items/{id}")
@@ -60,7 +62,8 @@ public class ShoppingCartController {
                                    @Valid @RequestBody UpdateCartItemDto requestDto) {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
-        return itemService.updateByEmail(id, authentication.getName(), requestDto);
+        User user = (User) authentication.getPrincipal();
+        return cartService.updateItemByUserId(id, user.getId(), requestDto);
     }
 
     @DeleteMapping("/cart-items/{id}")
@@ -71,7 +74,8 @@ public class ShoppingCartController {
     public void deleteBookFromCart(@PathVariable Long id) {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
-        itemService.deleteByEmail(id, authentication.getName());
+        User user = (User) authentication.getPrincipal();
+        cartService.deleteItemByUserId(id, user.getId());
     }
 
     @DeleteMapping("/clear")
@@ -82,6 +86,7 @@ public class ShoppingCartController {
     public void clearCart() {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
-        cartService.clearShoppingCartByEmail(authentication.getName());
+        User user = (User) authentication.getPrincipal();
+        cartService.clearShoppingCartByUserId(user.getId());
     }
 }
