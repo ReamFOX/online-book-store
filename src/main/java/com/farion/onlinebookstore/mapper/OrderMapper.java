@@ -1,7 +1,7 @@
 package com.farion.onlinebookstore.mapper;
 
 import com.farion.onlinebookstore.config.MapperConfig;
-import com.farion.onlinebookstore.dto.OrderDto;
+import com.farion.onlinebookstore.dto.order.OrderDto;
 import com.farion.onlinebookstore.entity.Order;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
