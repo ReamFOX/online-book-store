@@ -13,6 +13,7 @@ import com.farion.onlinebookstore.mapper.UserMapper;
 import com.farion.onlinebookstore.repository.UserRepository;
 import com.farion.onlinebookstore.security.AuthService;
 import com.farion.onlinebookstore.service.RoleService;
+import com.farion.onlinebookstore.service.ShoppingCartService;
 import com.farion.onlinebookstore.util.JwtUtil;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final RoleService roleService;
+    private final ShoppingCartService shoppingCartService;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -42,7 +44,9 @@ public class AuthServiceImpl implements AuthService {
         Role userRole = roleService.findByName(USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Set.of(userRole));
-        return userMapper.toDto(userRepository.save(user));
+        userRepository.save(user);
+        shoppingCartService.registerNewShoppingCart(user);
+        return userMapper.toDto(user);
     }
 
     @Override
