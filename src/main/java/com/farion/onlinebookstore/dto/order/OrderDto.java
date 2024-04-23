@@ -1,4 +1,4 @@
-package com.farion.onlinebookstore.dto;
+package com.farion.onlinebookstore.dto.order;
 
 import static com.farion.onlinebookstore.entity.Order.Status;
 
