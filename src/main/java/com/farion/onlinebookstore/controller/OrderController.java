@@ -3,10 +3,9 @@ package com.farion.onlinebookstore.controller;
 import com.farion.onlinebookstore.dto.item.order.OrderItemDto;
 import com.farion.onlinebookstore.dto.order.CreateOrderRequestDto;
 import com.farion.onlinebookstore.dto.order.OrderDto;
-import com.farion.onlinebookstore.dto.item.CartItemDto;
-import com.farion.onlinebookstore.dto.item.CreateCartItemRequestDto;
 import com.farion.onlinebookstore.dto.order.UpdateOrderStatusDto;
 import com.farion.onlinebookstore.entity.User;
+import com.farion.onlinebookstore.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
+    private final OrderService orderService;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
@@ -44,10 +44,10 @@ public class OrderController {
     @Operation(summary = "Place an order",
             description = "Enables users to submit requests for purchasing books")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public CartItemDto placeOrder(@RequestBody @Valid CreateOrderRequestDto requestDto,
+    public OrderDto placeOrder(@RequestBody @Valid CreateOrderRequestDto requestDto,
                                      Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return null;
+        return orderService.placeOrder(requestDto, user.getId());
     }
 
     @GetMapping("/{orderId}/items")
