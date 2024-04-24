@@ -51,6 +51,10 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private boolean isDeleted = false;
 
+    public User(long id) {
+        this.id = id;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new HashSet<>(roles);
