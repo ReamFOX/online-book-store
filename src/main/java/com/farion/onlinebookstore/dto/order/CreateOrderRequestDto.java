@@ -8,5 +8,6 @@ import lombok.Data;
 public class CreateOrderRequestDto {
     @NotBlank
     @Size(max = 255, message = "Shipping address can`t be longer than 255 characters")
+
     private String shippingAddress;
 }
