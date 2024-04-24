@@ -46,21 +46,6 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(order);
     }
 
-    private Order saveOrder(CreateOrderRequestDto requestDto, Long id) {
-        Order order = new Order();
-        ShoppingCart cart = cartRepository.getReferenceById(id);
-        order.setUser(cart.getUser());
-        order.setOrderDate(LocalDateTime.now());
-        order.setStatus(INIT_STATUS);
-        order.setShippingAddress(requestDto.getShippingAddress());
-        Set<OrderItem> orderItems = itemService.createOrderItems(cart.getCartItems());
-        order.setOrderItems(orderItems);
-        order.setTotal(orderItems.stream()
-                .map(OrderItem::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
-        return orderRepository.save(order);
-    }
-
     @Override
     public OrderItemDto getItemFromOrder(Long orderId, Long itemId, Long userId) {
         Order order = getOrderByUser(orderId, userId);
@@ -94,10 +79,25 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toSet());
     }
 
+    private Order saveOrder(CreateOrderRequestDto requestDto, Long id) {
+        Order order = new Order();
+        ShoppingCart cart = cartRepository.getReferenceById(id);
+        order.setUser(cart.getUser());
+        order.setOrderDate(LocalDateTime.now());
+        order.setStatus(INIT_STATUS);
+        order.setShippingAddress(requestDto.getShippingAddress());
+        Set<OrderItem> orderItems = itemService.createOrderItems(cart.getCartItems());
+        order.setOrderItems(orderItems);
+        order.setTotal(orderItems.stream()
+                .map(OrderItem::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
+        return orderRepository.save(order);
+    }
+
     private Order getOrderByUser(Long orderId, Long userId) {
         return orderRepository.findByIdAndUser_Id(orderId, userId)
-                .orElseThrow(() -> new EntityNotFoundException("You don`t have order "
-                        + "with id " + orderId));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "You don`t have order with id " + orderId));
     }
 
     private Status getStatusIfValid(String requestStatus) {
