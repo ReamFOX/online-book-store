@@ -1,5 +1,6 @@
 package com.farion.onlinebookstore.service;
 
+import com.farion.onlinebookstore.dto.item.order.OrderItemDto;
 import com.farion.onlinebookstore.entity.CartItem;
 import com.farion.onlinebookstore.entity.Order;
 import com.farion.onlinebookstore.entity.OrderItem;
@@ -9,4 +10,8 @@ public interface OrderItemService {
     Set<OrderItem> createOrderItems(Set<CartItem> cartItem);
 
     void setOrder(OrderItem orderItem, Order order);
+
+    OrderItemDto getOrderItem(Order order, Long itemId);
+
+    Set<OrderItemDto> getOrderItems(Order order);
 }
