@@ -36,7 +36,7 @@ public class OrderController {
             description = "Retrieve user's order history")
     public Set<OrderDto> getOrderHistory(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return null;
+        return orderService.getAllByUser(user.getId());
     }
 
     @PostMapping
@@ -57,7 +57,7 @@ public class OrderController {
     public Set<OrderItemDto> getAllItemsFromOrder(@PathVariable Long orderId,
                                                   Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return null;
+        return orderService.getAllItemsFromOrder(orderId, user.getId());
     }
 
     @GetMapping("/{orderId}/items/{itemId}")
@@ -68,7 +68,7 @@ public class OrderController {
                                          @PathVariable Long itemId,
                                          Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return null;
+        return orderService.getItemFromOrder(orderId, itemId, user.getId());
     }
 
     @PatchMapping("/{id}")
@@ -76,8 +76,8 @@ public class OrderController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Update order status",
             description = "Change the status of the order by id")
-    public void updateOrderStatus(@PathVariable Long id,
+    public OrderDto updateOrderStatus(@PathVariable Long id,
                                   @RequestBody UpdateOrderStatusDto statusDto) {
-
+        return orderService.updateOrderStatus(id, statusDto);
     }
 }
