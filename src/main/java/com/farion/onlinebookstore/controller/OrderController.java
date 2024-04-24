@@ -77,7 +77,7 @@ public class OrderController {
     @Operation(summary = "Update order status",
             description = "Change the status of the order by id")
     public OrderDto updateOrderStatus(@PathVariable Long id,
-                                  @RequestBody UpdateOrderStatusDto statusDto) {
+                                  @RequestBody @Valid UpdateOrderStatusDto statusDto) {
         return orderService.updateOrderStatus(id, statusDto);
     }
 }
