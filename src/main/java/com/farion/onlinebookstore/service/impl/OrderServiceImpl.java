@@ -81,7 +81,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Order saveOrder(CreateOrderRequestDto requestDto, Long id) {
-        ShoppingCart cart = cartRepository.getReferenceById(id);
+        ShoppingCart cart = cartRepository.findByUser_Id(id).orElseThrow(() ->
+                new EntityNotFoundException("Can`t find shopping cart by "
+                        + "user id: " + id));
         if (cart.getCartItems().isEmpty()) {
             throw new EmptyCartException("Your cart is empty");
         }
