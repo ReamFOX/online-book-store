@@ -9,6 +9,7 @@ import com.farion.onlinebookstore.dto.order.UpdateOrderStatusDto;
 import com.farion.onlinebookstore.entity.Order;
 import com.farion.onlinebookstore.entity.OrderItem;
 import com.farion.onlinebookstore.entity.ShoppingCart;
+import com.farion.onlinebookstore.exception.EmptyCartException;
 import com.farion.onlinebookstore.exception.InvalidStatusException;
 import com.farion.onlinebookstore.mapper.OrderMapper;
 import com.farion.onlinebookstore.repository.OrderRepository;
@@ -82,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
     private Order saveOrder(CreateOrderRequestDto requestDto, Long id) {
         ShoppingCart cart = cartRepository.getReferenceById(id);
         if (cart.getCartItems().isEmpty()) {
-            throw new EntityNotFoundException("Your cart is empty");
+            throw new EmptyCartException("Your cart is empty");
         }
         Order order = new Order();
         order.setUser(cart.getUser());
