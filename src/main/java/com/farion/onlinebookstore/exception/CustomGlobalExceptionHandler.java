@@ -1,5 +1,6 @@
 package com.farion.onlinebookstore.exception;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
@@ -67,6 +68,12 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler(InvalidStatusException.class)
     public ResponseEntity<Object> handleStatusNotFoundException(
             InvalidStatusException e) {
+         return getDefTemplate(e, HttpStatus.BAD_REQUEST);
+   }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<Object> handleJwtException(
+            JwtException e) {
         return getDefTemplate(e, HttpStatus.BAD_REQUEST);
     }
 
