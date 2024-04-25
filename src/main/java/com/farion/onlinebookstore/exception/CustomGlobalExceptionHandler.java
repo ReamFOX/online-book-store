@@ -64,6 +64,18 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return getDefTemplate(e, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InvalidStatusException.class)
+    public ResponseEntity<Object> handleStatusNotFoundException(
+            InvalidStatusException e) {
+        return getDefTemplate(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmptyCartException.class)
+    public ResponseEntity<Object> handleEmptyCartException(
+            InvalidStatusException e) {
+        return getDefTemplate(e, HttpStatus.BAD_REQUEST);
+    }
+
     private ResponseEntity<Object> getDefTemplate(Throwable e, HttpStatus status) {
         body.put(TIMESTAMP, LocalDateTime.now());
         body.put(STATUS, status);
