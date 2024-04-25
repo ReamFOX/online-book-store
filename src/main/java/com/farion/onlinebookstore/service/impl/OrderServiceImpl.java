@@ -80,8 +80,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Order saveOrder(CreateOrderRequestDto requestDto, Long id) {
-        Order order = new Order();
         ShoppingCart cart = cartRepository.getReferenceById(id);
+        if (cart.getCartItems().isEmpty()) {
+            throw new EntityNotFoundException("Your cart is empty");
+        }
+        Order order = new Order();
         order.setUser(cart.getUser());
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(INIT_STATUS);
