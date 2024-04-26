@@ -20,7 +20,8 @@ services:
       retries: 3
   app:
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     restart: on-failure
     image: books-service
     build: .
