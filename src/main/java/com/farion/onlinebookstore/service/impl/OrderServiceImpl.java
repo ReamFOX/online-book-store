@@ -6,6 +6,7 @@ import com.farion.onlinebookstore.dto.item.order.OrderItemDto;
 import com.farion.onlinebookstore.dto.order.CreateOrderRequestDto;
 import com.farion.onlinebookstore.dto.order.OrderDto;
 import com.farion.onlinebookstore.dto.order.UpdateOrderStatusDto;
+import com.farion.onlinebookstore.entity.CartItem;
 import com.farion.onlinebookstore.entity.Order;
 import com.farion.onlinebookstore.entity.OrderItem;
 import com.farion.onlinebookstore.entity.ShoppingCart;
@@ -87,17 +88,26 @@ public class OrderServiceImpl implements OrderService {
         if (cart.getCartItems().isEmpty()) {
             throw new EmptyCartException("Your cart is empty");
         }
+        Order order = initOrder(requestDto, cart);
+        setItemsAndTotal(order, cart.getCartItems());
+        return orderRepository.save(order);
+    }
+
+    private Order initOrder(CreateOrderRequestDto requestDto, ShoppingCart cart) {
         Order order = new Order();
-        order.setUser(cart.getUser());
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(INIT_STATUS);
+        order.setUser(cart.getUser());
         order.setShippingAddress(requestDto.getShippingAddress());
-        Set<OrderItem> orderItems = itemService.createOrderItems(cart.getCartItems());
+        return order;
+    }
+
+    private void setItemsAndTotal(Order order, Set<CartItem> itemsInCart) {
+        Set<OrderItem> orderItems = itemService.createOrderItems(itemsInCart);
         order.setOrderItems(orderItems);
         order.setTotal(orderItems.stream()
                 .map(OrderItem::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add));
-        return orderRepository.save(order);
     }
 
     private Order getOrderByUser(Long orderId, Long userId) {
