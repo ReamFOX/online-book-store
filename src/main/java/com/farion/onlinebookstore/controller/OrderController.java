@@ -1,12 +1,11 @@
 package com.farion.onlinebookstore.controller;
 
-import com.farion.onlinebookstore.dto.item.order.OrderItemDto;
+import com.farion.onlinebookstore.dto.item.orderitem.OrderItemDto;
 import com.farion.onlinebookstore.dto.order.CreateOrderRequestDto;
 import com.farion.onlinebookstore.dto.order.OrderDto;
-import com.farion.onlinebookstore.dto.item.CartItemDto;
-import com.farion.onlinebookstore.dto.item.CreateCartItemRequestDto;
 import com.farion.onlinebookstore.dto.order.UpdateOrderStatusDto;
 import com.farion.onlinebookstore.entity.User;
+import com.farion.onlinebookstore.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
+    private final OrderService orderService;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
@@ -36,7 +36,7 @@ public class OrderController {
             description = "Retrieve user's order history")
     public Set<OrderDto> getOrderHistory(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return null;
+        return orderService.getAllByUser(user.getId());
     }
 
     @PostMapping
@@ -44,10 +44,10 @@ public class OrderController {
     @Operation(summary = "Place an order",
             description = "Enables users to submit requests for purchasing books")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public CartItemDto placeOrder(@RequestBody @Valid CreateOrderRequestDto requestDto,
-                                     Authentication authentication) {
+    public OrderDto placeOrder(@RequestBody @Valid CreateOrderRequestDto requestDto,
+                               Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return null;
+        return orderService.placeOrder(requestDto, user.getId());
     }
 
     @GetMapping("/{orderId}/items")
@@ -57,7 +57,7 @@ public class OrderController {
     public Set<OrderItemDto> getAllItemsFromOrder(@PathVariable Long orderId,
                                                   Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return null;
+        return orderService.getAllItemsFromOrder(orderId, user.getId());
     }
 
     @GetMapping("/{orderId}/items/{itemId}")
@@ -68,7 +68,7 @@ public class OrderController {
                                          @PathVariable Long itemId,
                                          Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return null;
+        return orderService.getItemFromOrder(orderId, itemId, user.getId());
     }
 
     @PatchMapping("/{id}")
@@ -76,8 +76,8 @@ public class OrderController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Update order status",
             description = "Change the status of the order by id")
-    public void updateOrderStatus(@PathVariable Long id,
-                                  @RequestBody UpdateOrderStatusDto statusDto) {
-
+    public OrderDto updateOrderStatus(@PathVariable Long id,
+                                      @RequestBody @Valid UpdateOrderStatusDto statusDto) {
+        return orderService.updateOrderStatus(id, statusDto);
     }
 }

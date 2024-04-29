@@ -45,33 +45,45 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException e) {
-        return getDefTemplate(e, HttpStatus.NOT_FOUND);
+        return getDefaultTemplate(e, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<Object> handleSqlIntegrityConstraintViolationException(
             SQLIntegrityConstraintViolationException e) {
-        return getDefTemplate(e, HttpStatus.CONFLICT);
+        return getDefaultTemplate(e, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(RegistrationException.class)
     public ResponseEntity<Object> handleRegistrationException(RegistrationException e) {
-        return getDefTemplate(e, HttpStatus.BAD_REQUEST);
+        return getDefaultTemplate(e, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidCategoryIdsException.class)
     public ResponseEntity<Object> handleInvalidCategoryIdsException(
             InvalidCategoryIdsException e) {
-        return getDefTemplate(e, HttpStatus.BAD_REQUEST);
+        return getDefaultTemplate(e, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(JwtException.class)
     public ResponseEntity<Object> handleJwtException(
             JwtException e) {
-        return getDefTemplate(e, HttpStatus.BAD_REQUEST);
+        return getDefaultTemplate(e, HttpStatus.BAD_REQUEST);
     }
 
-    private ResponseEntity<Object> getDefTemplate(Throwable e, HttpStatus status) {
+    @ExceptionHandler(InvalidStatusException.class)
+    public ResponseEntity<Object> handleStatusNotFoundException(
+            InvalidStatusException e) {
+        return getDefaultTemplate(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmptyCartException.class)
+    public ResponseEntity<Object> handleEmptyCartException(
+            InvalidStatusException e) {
+        return getDefaultTemplate(e, HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<Object> getDefaultTemplate(Throwable e, HttpStatus status) {
         body.put(TIMESTAMP, LocalDateTime.now());
         body.put(STATUS, status);
         body.put(ERRORS, e.getMessage());
