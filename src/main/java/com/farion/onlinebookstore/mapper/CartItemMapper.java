@@ -1,8 +1,8 @@
 package com.farion.onlinebookstore.mapper;
 
 import com.farion.onlinebookstore.config.MapperConfig;
-import com.farion.onlinebookstore.dto.item.CartItemDto;
-import com.farion.onlinebookstore.dto.item.CreateCartItemRequestDto;
+import com.farion.onlinebookstore.dto.item.cartitem.CartItemDto;
+import com.farion.onlinebookstore.dto.item.cartitem.CreateCartItemRequestDto;
 import com.farion.onlinebookstore.entity.CartItem;
 import java.util.Set;
 import java.util.stream.Collectors;
