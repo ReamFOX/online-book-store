@@ -1,11 +1,10 @@
-package com.farion.onlinebookstore.dto.item;
+package com.farion.onlinebookstore.dto.item.orderitem;
 
 import lombok.Data;
 
 @Data
-public class CartItemDto {
+public class OrderItemDto {
     private Long id;
     private Long bookId;
-    private String bookTitle;
     private int quantity;
 }

@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-orders-table
+      author: farion
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_order_user
+                    references: users(id)
+              - column:
+                  name: status
+                  type: enum('PENDING', 'COMPLETED', 'DELIVERED')
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total
+                  type: decimal(38,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_date
+                  type: datetime
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: shipping_address
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

@@ -1,4 +1,4 @@
-package com.farion.onlinebookstore.dto.item;
+package com.farion.onlinebookstore.dto.item.cartitem;
 
 import jakarta.validation.constraints.Min;
 import lombok.Data;
