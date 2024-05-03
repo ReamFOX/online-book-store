@@ -116,13 +116,12 @@ class BookServiceImplTest {
     @Test
     void testFindAll() {
         int expectedSize = 2;
-        Pageable pageable = Pageable.unpaged();
         List<Book> twoBooks = Arrays.asList(new Book(), new Book());
 
-        when(bookRepository.findAll(pageable)).thenReturn(new PageImpl<>(twoBooks));
+        when(bookRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(twoBooks));
         when(bookMapper.toDto(any())).thenReturn(new BookDto());
 
-        List<BookDto> result = bookService.findAll(pageable);
+        List<BookDto> result = bookService.findAll(Pageable.unpaged());
 
         assertNotNull(result);
         assertEquals(expectedSize, result.size());
