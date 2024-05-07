@@ -1,0 +1,74 @@
+[
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "isbn": "9780061120084",
+    "price": "10.99",
+    "description": "A gripping, heart-wrenching, and wholly remarkable tale of coming-of-age in a South poisoned by virulent prejudice.",
+    "cover_image": "tokillamockingbird.jpg"
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "isbn": "9780451524935",
+    "price": "9.99",
+    "description": "A dystopian novel by English novelist George Orwell.",
+    "cover_image": "1984.jpg"
+  },
+  {
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "isbn": "9780316769488",
+    "price": "12.50",
+    "description": "A controversial novel by American author J. D. Salinger, first published in 1951.",
+    "cover_image": "catcherintherye.jpg"
+  },
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "isbn": "9780141439518",
+    "price": "8.95",
+    "description": "A romantic novel of manners written by Jane Austen.",
+    "cover_image": "prideandprejudice.jpg"
+  },
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "price": "11.29",
+    "description": "A novel written by American author F. Scott Fitzgerald.",
+    "cover_image": "greatgatsby.jpg"
+  },
+  {
+    "title": "To the Lighthouse",
+    "author": "Virginia Woolf",
+    "isbn": "9780156030472",
+    "price": "10.19",
+    "description": "A novel by Virginia Woolf that addresses the role of women in society.",
+    "cover_image": "tothelighthouse.jpg"
+  },
+  {
+    "title": "Moby-Dick",
+    "author": "Herman Melville",
+    "isbn": "9780142437247",
+    "price": "14.59",
+    "description": "A novel by Herman Melville about a voyage.",
+    "cover_image": "mobydick.jpg"
+  },
+  {
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "isbn": "9780060850524",
+    "price": "13.39",
+    "description": "A novel written by Aldous Huxley.",
+    "cover_image": "bravenewworld.jpg"
+  },
+  {
+    "title": "The Lord of the Rings",
+    "author": "J.R.R. Tolkien",
+    "isbn": "9780261102385",
+    "price": "20.99",
+    "description": "An epic high fantasy novel written by English author J.R.R. Tolkien.",
+    "cover_image": "thelordoftherings.jpg"
+  }
+]

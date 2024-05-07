@@ -21,6 +21,7 @@ import com.farion.onlinebookstore.repository.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,6 +39,7 @@ public class CategoryServiceImplTest {
     @InjectMocks
     private CategoryServiceImpl categoryService;
 
+    @DisplayName("Return list of all categories")
     @Test
     void findAll_ReturnsListOfCategories() {
         int expectedSize = 2;
@@ -50,6 +52,7 @@ public class CategoryServiceImplTest {
         assertEquals(expectedSize, actual.size());
     }
 
+    @DisplayName("Finding by id with existent id")
     @Test
     void getById_WithValidId_ReturnsCategoryDto() {
         Category category = new Category();
@@ -65,6 +68,7 @@ public class CategoryServiceImplTest {
         assertEquals(TEST_ID, actual.id());
     }
 
+    @DisplayName("Finding by id with nonexistent id")
     @Test
     void getById_WithInvalidId_ThrowsEntityNotFoundException() {
         String expectedMessage = "Can`t find category by id: " + TEST_ID;
@@ -76,6 +80,7 @@ public class CategoryServiceImplTest {
         assertEquals(expectedMessage, exception.getMessage());
     }
 
+    @DisplayName("Create a new category with valid data")
     @Test
     void createCategory_ReturnsCreatedCategoryDto() {
         CreateCategoryRequestDto requestDto = new CreateCategoryRequestDto();
@@ -91,11 +96,12 @@ public class CategoryServiceImplTest {
         assertEquals(expectedDto, result);
     }
 
+    @DisplayName("Update a category with valid data")
     @Test
     void update_WithValidId_ReturnsUpdatedCategoryDto() {
-        CreateCategoryRequestDto requestDto = new CreateCategoryRequestDto();
         Category category = new Category();
         category.setId(TEST_ID);
+        CreateCategoryRequestDto requestDto = new CreateCategoryRequestDto();
         when(categoryRepository.findById(TEST_ID)).thenReturn(Optional.of(category));
         Category updatedCategory = new Category();
         when(categoryRepository.save(any(Category.class))).thenReturn(updatedCategory);
@@ -108,6 +114,7 @@ public class CategoryServiceImplTest {
         assertEquals(expectedDto, result);
     }
 
+    @DisplayName("Update a category with invalid data")
     @Test
     void update_WithInvalidId_ThrowsEntityNotFoundException() {
         CreateCategoryRequestDto requestDto = new CreateCategoryRequestDto();
@@ -120,6 +127,7 @@ public class CategoryServiceImplTest {
         assertEquals(expectedMessage, exception.getMessage());
     }
 
+    @DisplayName("Deleting with existing id")
     @Test
     void deleteById_WithValidId_VerifiesRepositoryDeleteById() {
         categoryService.deleteById(TEST_ID);

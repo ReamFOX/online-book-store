@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,6 +44,7 @@ class BookServiceImplTest {
     @InjectMocks
     private BookServiceImpl bookService;
 
+    @DisplayName("Saving book with valid data")
     @Test
     void testCreateBook_ValidInput() {
         CreateBookRequestDto requestDto = new CreateBookRequestDto();
@@ -67,19 +69,23 @@ class BookServiceImplTest {
         assertEquals(requestDto.getTitle(), result.getTitle());
     }
 
+    @DisplayName("Throw exception because of book with nonexistent id")
     @Test
     void testCreateBook_InvalidCategories() {
         CreateBookRequestDto requestDto = new CreateBookRequestDto();
+
         requestDto.setCategories(TEST_CATEGORY);
         String expectedMessage = "Invalid category ids: " + TEST_CATEGORY;
 
         when(categoryService.getAllCategoryIds()).thenReturn(Collections.emptySet());
 
-        Exception exception = assertThrows(InvalidCategoryIdsException.class, () -> bookService.createBook(requestDto));
+        Exception exception = assertThrows(InvalidCategoryIdsException.class,
+                () -> bookService.createBook(requestDto));
         assertEquals(expectedMessage, exception.getMessage());
 
     }
 
+    @DisplayName("Finding by id with existent id")
     @Test
     void testFindById_ExistingId() {
         Book book = new Book();
@@ -97,25 +103,28 @@ class BookServiceImplTest {
         assertEquals(expected.getTitle(), result.getTitle());
     }
 
+    @DisplayName("Finding by id with nonexistent id")
     @Test
     void testFindById_NonExistingId() {
         String expectedMessage = "Book with id " + TEST_ID + " doesn't exist";
 
         when(bookRepository.findById(TEST_ID)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(EntityNotFoundException.class, () -> bookService.findById(TEST_ID));
+        Exception exception = assertThrows(EntityNotFoundException.class,
+                () -> bookService.findById(TEST_ID));
         assertEquals(expectedMessage, exception.getMessage());
     }
 
     @Test
+    @DisplayName("Deleting with existing id")
     void testDeleteById_ExistingId() {
         assertDoesNotThrow(() -> bookService.deleteById(TEST_ID));
         verify(bookRepository, times(1)).deleteById(TEST_ID);
     }
 
     @Test
+    @DisplayName("Return list of all books")
     void testFindAll() {
-        int expectedSize = 2;
         List<Book> twoBooks = Arrays.asList(new Book(), new Book());
 
         when(bookRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(twoBooks));
@@ -124,6 +133,6 @@ class BookServiceImplTest {
         List<BookDto> result = bookService.findAll(Pageable.unpaged());
 
         assertNotNull(result);
-        assertEquals(expectedSize, result.size());
+        assertEquals(twoBooks.size(), result.size());
     }
 }
