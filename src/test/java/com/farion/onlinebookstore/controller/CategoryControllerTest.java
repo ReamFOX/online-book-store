@@ -37,7 +37,10 @@ public class CategoryControllerTest {
 
     @BeforeAll
     static void beforeAll(@Autowired WebApplicationContext context) {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
     }
 
     @Test

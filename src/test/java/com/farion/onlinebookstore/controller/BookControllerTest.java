@@ -33,7 +33,10 @@ class BookControllerTest {
 
     @BeforeAll
     static void beforeAll(@Autowired WebApplicationContext context) {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
     }
 
     @WithMockUser
