@@ -11,6 +11,9 @@ public class ConstUtil {
     public static final String TEST_CATEGORY_NAME = "Dystopia";
     public static final String BOOK_ENDPOINT = "/books";
     public static final String CATEGORY_ENDPOINT = "/categories";
+    public static final String AUTH_ENDPOINT = "/auth";
+    public static final String REGISTRATION_ENDPOINT = "/register";
+    public static final String LOGIN_ENDPOINT = "/login";
     public static final String SLASH = "/";
     public static final String SEARCH_BY_TITLE = "/search?title=";
     public static final File TEST_BOOKS =
