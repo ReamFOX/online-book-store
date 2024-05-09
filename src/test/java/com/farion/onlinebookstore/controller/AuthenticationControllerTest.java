@@ -67,7 +67,7 @@ public class AuthenticationControllerTest {
         mockMvc.perform(post(AUTH_ENDPOINT + LOGIN_ENDPOINT)
                         .content(objectMapper.writeValueAsString(requestDto))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isUnauthorized());
     }
 
     @Sql(scripts = "classpath:db/users/remove-test-user.sql",
