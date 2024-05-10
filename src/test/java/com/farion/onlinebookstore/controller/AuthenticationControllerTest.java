@@ -1,13 +1,14 @@
 package com.farion.onlinebookstore.controller;
 
-import static com.farion.onlinebookstore.util.ConstUtil.AUTH_ENDPOINT;
-import static com.farion.onlinebookstore.util.ConstUtil.LOGIN_ENDPOINT;
-import static com.farion.onlinebookstore.util.ConstUtil.REGISTRATION_ENDPOINT;
+import static com.farion.onlinebookstore.util.TestObjectMother.AUTH_ENDPOINT;
+import static com.farion.onlinebookstore.util.TestObjectMother.LOGIN_ENDPOINT;
+import static com.farion.onlinebookstore.util.TestObjectMother.REGISTRATION_ENDPOINT;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.farion.onlinebookstore.dto.user.UserDto;
 import com.farion.onlinebookstore.dto.user.login.UserLoginRequestDto;
 import com.farion.onlinebookstore.dto.user.register.RegisterUserRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +20,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -78,6 +81,7 @@ public class AuthenticationControllerTest {
         String expectedName = "test";
         String expectedEmail = "test@example.com";
         String password = "ALABAMA1";
+
         RegisterUserRequestDto requestDto =
                 new RegisterUserRequestDto();
         requestDto.setEmail(expectedEmail);
@@ -86,13 +90,21 @@ public class AuthenticationControllerTest {
         requestDto.setFirstName(expectedName);
         requestDto.setLastName(expectedName);
 
-        mockMvc.perform(post(AUTH_ENDPOINT + REGISTRATION_ENDPOINT)
+        UserDto expected = new UserDto();
+        expected.setEmail(expectedEmail);
+        expected.setFirstName(expectedName);
+        expected.setLastName(expectedName);
+
+        MvcResult result = mockMvc.perform(post(AUTH_ENDPOINT + REGISTRATION_ENDPOINT)
                 .content(objectMapper.writeValueAsString(requestDto))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.email").value(expectedEmail))
-                .andExpect(jsonPath("$.firstName").value(expectedName))
-                .andExpect(jsonPath("$.lastName").value(expectedName));
+                .andReturn();
+
+       UserDto actual =
+               objectMapper.readValue(result.getResponse().getContentAsString(), UserDto.class);
+
+        EqualsBuilder.reflectionEquals(expected, actual, "id");
     }
 
     @DisplayName("Register new user with invalid data")

@@ -1,7 +1,7 @@
 package com.farion.onlinebookstore.controller;
 
-import static com.farion.onlinebookstore.util.ConstUtil.CART_ENDPOINT;
-import static com.farion.onlinebookstore.util.ConstUtil.CLEAR_ENDPOINT;
+import static com.farion.onlinebookstore.util.TestObjectMother.CART_ENDPOINT;
+import static com.farion.onlinebookstore.util.TestObjectMother.CLEAR_ENDPOINT;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,12 +9,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.farion.onlinebookstore.dto.ShoppingCartDto;
+import com.farion.onlinebookstore.dto.item.cartitem.CartItemDto;
 import com.farion.onlinebookstore.dto.item.cartitem.CreateCartItemRequestDto;
 import com.farion.onlinebookstore.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ShoppingCartControllerTest {
@@ -52,13 +56,22 @@ public class ShoppingCartControllerTest {
     @DisplayName("Get cart of authorized user")
     void getCart_authorizedUser_Success() throws Exception {
         Long expectedId = 1L;
+        Set<CartItemDto> expectedItems = Collections.emptySet();
         addUserToSecurityContextHolder(expectedId);
 
-        mockMvc.perform(get(CART_ENDPOINT))
+        ShoppingCartDto expected = new ShoppingCartDto();
+        expected.setId(expectedId);
+        expected.setUserId(expectedId);
+        expected.setCartItems(expectedItems);
+
+        MvcResult result = mockMvc.perform(get(CART_ENDPOINT))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.id").value(expectedId))
-                .andExpect(jsonPath("$.userId").value(expectedId))
-                .andExpect(jsonPath("$.cartItems").isEmpty());
+                .andReturn();
+
+        ShoppingCartDto actual = objectMapper
+                .readValue(result.getResponse().getContentAsString(), ShoppingCartDto.class);
+
+        EqualsBuilder.reflectionEquals(expected, actual);
     }
 
     @Test
@@ -95,8 +108,8 @@ public class ShoppingCartControllerTest {
         addUserToSecurityContextHolder(1L);
 
         mockMvc.perform(post(CART_ENDPOINT)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.bookId").value(expectedBookId))
                 .andExpect(jsonPath("$.quantity").value(expectedQuantity));
@@ -130,7 +143,6 @@ public class ShoppingCartControllerTest {
     }
 
 
-
     private void addUserToSecurityContextHolder(Long id) {
         String email = "test@example.com";
         String role = "ROLE_USER";
@@ -141,7 +153,7 @@ public class ShoppingCartControllerTest {
         GrantedAuthority authority = new SimpleGrantedAuthority(role);
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(user, null,
-                Collections.singleton(authority));
+                        Collections.singleton(authority));
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
