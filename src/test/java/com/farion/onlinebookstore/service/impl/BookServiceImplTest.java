@@ -1,8 +1,8 @@
 package com.farion.onlinebookstore.service.impl;
 
-import static com.farion.onlinebookstore.util.ConstUtil.TEST_CATEGORY;
-import static com.farion.onlinebookstore.util.ConstUtil.TEST_ID;
-import static com.farion.onlinebookstore.util.ConstUtil.TEST_TITLE;
+import static com.farion.onlinebookstore.util.TestObjectMother.TEST_CATEGORY;
+import static com.farion.onlinebookstore.util.TestObjectMother.TEST_ID;
+import static com.farion.onlinebookstore.util.TestObjectMother.TEST_TITLE;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
