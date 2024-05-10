@@ -1,10 +1,10 @@
 package com.farion.onlinebookstore.controller;
 
+import static com.farion.onlinebookstore.util.EqualityUtil.testCollectionEquality;
 import static com.farion.onlinebookstore.util.TestObjectMother.CATEGORY_ENDPOINT;
 import static com.farion.onlinebookstore.util.TestObjectMother.SLASH;
 import static com.farion.onlinebookstore.util.TestObjectMother.TEST_CATEGORIES;
 import static com.farion.onlinebookstore.util.TestObjectMother.getTestObjects;
-import static com.farion.onlinebookstore.util.TestObjectMother.testCollectionEquality;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

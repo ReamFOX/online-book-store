@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
-import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 public class TestObjectMother {
     public static final String TEST_TITLE = "Cats Cradle";
@@ -38,11 +37,4 @@ public class TestObjectMother {
                         .getTypeFactory()
                         .constructCollectionType(List.class, clazz));
     }
-
-    public static <T> void testCollectionEquality(List<T> expected, List<T> actual, int size) {
-        for (int i = 0; i < size; i++) {
-            EqualsBuilder.reflectionEquals(expected.get(i), actual.get(i));
-        }
-    }
-
 }
