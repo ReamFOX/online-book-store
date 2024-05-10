@@ -1,10 +1,10 @@
 package com.farion.onlinebookstore.service.impl;
 
-import static com.farion.onlinebookstore.util.ConstUtil.TEST_CATEGORY_LIST;
-import static com.farion.onlinebookstore.util.ConstUtil.TEST_CATEGORY_NAME;
-import static com.farion.onlinebookstore.util.ConstUtil.TEST_DESCRIPTION;
-import static com.farion.onlinebookstore.util.ConstUtil.TEST_ID;
-import static com.farion.onlinebookstore.util.ConstUtil.TEST_TITLE;
+import static com.farion.onlinebookstore.util.TestObjectMother.TEST_CATEGORY_LIST;
+import static com.farion.onlinebookstore.util.TestObjectMother.TEST_CATEGORY_NAME;
+import static com.farion.onlinebookstore.util.TestObjectMother.TEST_DESCRIPTION;
+import static com.farion.onlinebookstore.util.TestObjectMother.TEST_ID;
+import static com.farion.onlinebookstore.util.TestObjectMother.TEST_TITLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
