@@ -13,7 +13,9 @@ public class TestObjectMother {
     public static final String TEST_CATEGORY_NAME = "Dystopia";
     public static final String BOOK_ENDPOINT = "/books";
     public static final String CATEGORY_ENDPOINT = "/categories";
+    public static final String ORDER_ENDPOINT = "/orders";
     public static final String AUTH_ENDPOINT = "/auth";
+    public static final String ITEM_ENDPOINT = "/items";
     public static final String REGISTRATION_ENDPOINT = "/register";
     public static final String LOGIN_ENDPOINT = "/login";
     public static final String CART_ENDPOINT = "/cart";
@@ -23,6 +25,7 @@ public class TestObjectMother {
     public static final Long TEST_ID = 1L;
     public static final Set<Long> TEST_CATEGORY = Set.of(1L);
     public static final List<Category> TEST_CATEGORY_LIST = List.of(new Category(), new Category());
+
     public static final File TEST_BOOKS =
             new File("src/test/resources/data/test-books.json");
     public static final File TEST_CATEGORIES =
@@ -34,8 +37,7 @@ public class TestObjectMother {
     public static <T> List<T> getTestObjects(
             ObjectMapper objectMapper,
             File testFile,
-            Class<T> clazz
-    ) throws IOException {
+            Class<T> clazz) throws IOException {
         return objectMapper.readValue(
                 testFile,
                 objectMapper

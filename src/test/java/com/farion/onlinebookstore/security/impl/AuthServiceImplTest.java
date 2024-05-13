@@ -32,8 +32,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-;
-
 public class AuthServiceImplTest {
 
     @Mock
@@ -67,7 +65,7 @@ public class AuthServiceImplTest {
 
     @DisplayName("Register new user")
     @Test
-    public void register_NewUser_Success() throws Exception{
+    public void register_NewUser_Success() throws Exception {
         RegisterUserRequestDto requestDto = new RegisterUserRequestDto();
         requestDto.setEmail("test@example.com");
         requestDto.setPassword("password");
@@ -100,7 +98,8 @@ public class AuthServiceImplTest {
         UserLoginRequestDto requestDto = new UserLoginRequestDto("test@example.com", "password");
         Authentication authentication = mock(Authentication.class);
         when(authentication.getName()).thenReturn(requestDto.email());
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
+        when(authenticationManager.authenticate(
+                any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
         when(jwtUtil.generateToken(anyString())).thenReturn("jwtToken");
 
         UserLoginResponseDto result = authService.authenticate(requestDto);

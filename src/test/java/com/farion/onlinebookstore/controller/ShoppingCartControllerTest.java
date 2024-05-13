@@ -48,8 +48,8 @@ public class ShoppingCartControllerTest {
                 .build();
     }
 
-    @Sql(scripts = "classpath:db/users/add-test-user.sql"
-            , executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:db/users/add-test-user.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:db/users/remove-test-user.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -60,9 +60,9 @@ public class ShoppingCartControllerTest {
         addUserToSecurityContextHolder(expectedId);
 
         ShoppingCartDto expected = new ShoppingCartDto();
+        expected.setCartItems(expectedItems);
         expected.setId(expectedId);
         expected.setUserId(expectedId);
-        expected.setCartItems(expectedItems);
 
         MvcResult result = mockMvc.perform(get(CART_ENDPOINT))
                 .andExpect(status().is2xxSuccessful())
@@ -81,6 +81,10 @@ public class ShoppingCartControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
+    @Sql(scripts = "classpath:db/users/add-test-user.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:db/users/remove-test-user.sql",
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     @DisplayName("Clear cart of authorized user")
     void clearCart_authorizedUser_Success() throws Exception {
@@ -97,6 +101,10 @@ public class ShoppingCartControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
+    @Sql(scripts = "classpath:db/users/add-test-user.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:db/users/remove-test-user.sql",
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     @DisplayName("Add book to the cart of authorized user")
     void addBookToCart_authorizedUser_Success() throws Exception {
@@ -128,6 +136,10 @@ public class ShoppingCartControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
+    @Sql(scripts = "classpath:db/users/add-test-user.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:db/users/remove-test-user.sql",
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     @DisplayName("Can`t add book to the cart because invalid data")
     void addBookToCart_invalidData_ThrowException() throws Exception {
@@ -141,7 +153,6 @@ public class ShoppingCartControllerTest {
         mockMvc.perform(post(CART_ENDPOINT))
                 .andExpect(status().isBadRequest());
     }
-
 
     private void addUserToSecurityContextHolder(Long id) {
         String email = "test@example.com";
