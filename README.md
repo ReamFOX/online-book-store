@@ -1,16 +1,13 @@
 # 📚 Online Bookstore API
 
-----------------
 Welcome to the Online Bookstore API! This API serves as the core infrastructure for an online bookstore, delivering crucial functionalities for book management, user authentication, and order processing. Born from the necessity for a scalable and efficient solution, this project aims to address the challenges of operating an online book retail platform.
 
 ## 🌟 Inspiration and Problem Solved
 
-----------------
 The concept for this project arose from the increasing demand for online book shopping. Unlike traditional bookstores, which are limited by their physical reach and inventory constraints, online bookstores can provide an extensive selection of books and a streamlined purchasing experience. This API tackles issues related to inventory management, secure user authentication, and order processing, offering a solid framework for creating an online bookstore.
 
 ## 🛠️ Technologies and Tools Used
 
-----------------
 - **Spring Boot**: For building the application framework.
 - **Spring Security**: To handle authentication and authorization.
 - **Spring Data JPA**: For database interactions using JPA.
@@ -26,7 +23,6 @@ The concept for this project arose from the increasing demand for online book sh
 
 ## 📝 Swagger Documentation
 
-----------------
 Swagger is integrated into the project to provide comprehensive API documentation and facilitate testing of endpoints. With Swagger, you can visualize and interact with the API's resources without having any of the implementation logic in place.
 
 To access the Swagger UI and explore the API documentation:
@@ -37,7 +33,6 @@ To access the Swagger UI and explore the API documentation:
 
 ## 🎨 Features and Functionality
 
-----------------
 ### Authentication
 
 - **Register user**: `POST /api/auth/register`
@@ -56,7 +51,7 @@ To access the Swagger UI and explore the API documentation:
 
 - **List all categories**: `GET /api/categories`
 - **Get category by id**: `GET /api/categories/{id}`
-- **Get all books bt category**: `GET /api/categories/{id}/books`
+- **Get all books by category**: `GET /api/categories/{id}/books`
 - **Add new category**: `POST /api/categories` (Admin only)
 - **Update category**: `PUT /api/categories/{id}` (Admin only)
 - **Delete category**: `DELETE /api/categories/{id}` (Admin only)
@@ -79,12 +74,10 @@ To access the Swagger UI and explore the API documentation:
 
 ## 📷 Visual Overview
 
-----------------
 [![Watch on Loom](https://img.shields.io/badge/Watch%20on-Loom-00a4d9)](https://www.loom.com/share/c82e8bf7ab634c2fbcf7852bd3fe5142?sid=11b04c4b-3e88-42d7-874d-6c122676626d)
 
 ## 🚀 Getting Started
 
-----------------
 ### Prerequisites
 
 - **Java 21+**
@@ -151,7 +144,6 @@ To access the Swagger UI and explore the API documentation:
     ```
 ## 🧪 Running Tests
 
-----------------
 To run tests, use the following command:
 
 ```bash
@@ -163,7 +155,6 @@ mvn test
 The project uses JUnit for unit testing and Mockito for mocking dependencies. This ensures that the application logic is tested in isolation, making the tests more reliable and easier to maintain.
 ## 📄 Challenges and Solutions
 
-----------------
 ### Challenge 1: Securing the API
 
 **Solution:** Implemented Spring Security to manage authentication and authorization, ensuring that sensitive endpoints are protected.
@@ -177,7 +168,6 @@ The project uses JUnit for unit testing and Mockito for mocking dependencies. Th
 **Solution:** Integrated Swagger to provide detailed API documentation and facilitate easy testing of endpoints.
 ## 📬 Postman Collection
 
-----------------
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://elements.getpostman.com/redirect?entityId=33948143-d2ac0092-0285-4de1-a6cf-cef4cd01c19a&entityType=collection)
 
 Here you can fork  collection of requests for API in Postman.
