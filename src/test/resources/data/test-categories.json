@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Novel",
+    "description": "Books by various authors that tell a story of love or contain romantic elements."
+  },
+  {
+    "id": 2,
+    "name": "Science Fiction",
+    "description": "Books based on imagination and fantasy, often grounded in scientific or technological concepts."
+  },
+  {
+    "id": 3,
+    "name": "Classic",
+    "description": "Famous and popular books considered classics of literature."
+  },
+  {
+    "id": 4,
+    "name": "Detective",
+    "description": "Books that investigate a crime, often involving suspenseful and societal elements."
+  },
+  {
+    "id": 5,
+    "name": "Adventure",
+    "description": "Books that tell thrilling events and journeys."
+  },
+  {
+    "id": 6,
+    "name": "Fiction",
+    "description": "A genre of literature that includes imaginative or invented stories, often set in the real world."
+  },
+  {
+    "id": 7,
+    "name": "Dystopia",
+    "description": "Books that depict a society characterized by human misery, oppression, and degradation."
+  },
+  {
+    "id": 8,
+    "name": "Fantasy",
+    "description": "A genre of speculative fiction set in a fictional universe, often inspired by myth, legend, or folklore, and featuring magic or supernatural elements."
+  }
+]
