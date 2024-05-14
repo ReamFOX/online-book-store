@@ -78,7 +78,6 @@ public class AuthServiceImplTest {
 
         UserDto result = authService.register(requestDto);
 
-        assertNotNull(result);
         assertEquals(requestDto.getEmail(), result.getEmail());
         verify(userRepository, times(1)).save(any(User.class));
         verify(shoppingCartService, times(1)).registerNewShoppingCart(any(User.class));
