@@ -21,10 +21,12 @@ import com.farion.onlinebookstore.service.RoleService;
 import com.farion.onlinebookstore.service.ShoppingCartService;
 import com.farion.onlinebookstore.util.JwtUtil;
 import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,6 +49,11 @@ public class AuthServiceImplTest {
     private AuthenticationManager authenticationManager;
     @InjectMocks
     private AuthServiceImpl authService;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @DisplayName("Register new user")
     @Test
