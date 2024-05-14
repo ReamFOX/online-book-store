@@ -25,7 +25,6 @@ public class TestObjectMother {
     public static final Long TEST_ID = 1L;
     public static final Set<Long> TEST_CATEGORY = Set.of(1L);
     public static final List<Category> TEST_CATEGORY_LIST = List.of(new Category(), new Category());
-
     public static final File TEST_BOOKS =
             new File("src/test/resources/data/test-books.json");
     public static final File TEST_CATEGORIES =
