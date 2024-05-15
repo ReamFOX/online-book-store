@@ -174,15 +174,17 @@ public class ShoppingCartControllerTest {
         Long expectedId = 1L;
         int expectedQuantity = 3;
         String expectedTitle = "To Kill a Mockingbird";
-        UpdateCartItemDto requestDto = new UpdateCartItemDto();
-        requestDto.setQuantity(expectedQuantity);
-        addUserToSecurityContextHolder(1L);
 
         CartItemDto expected = new CartItemDto();
         expected.setId(expectedId);
+        expected.setBookTitle(expectedTitle);
         expected.setQuantity(expectedQuantity);
         expected.setBookId(expectedId);
-        expected.setBookTitle(expectedTitle);
+
+        UpdateCartItemDto requestDto = new UpdateCartItemDto();
+        requestDto.setQuantity(expectedQuantity);
+
+        addUserToSecurityContextHolder(1L);
 
         MvcResult result = mockMvc.perform(
                         put(CART_ENDPOINT + CART_ITEM_ENDPOINT + SLASH + expectedId)
