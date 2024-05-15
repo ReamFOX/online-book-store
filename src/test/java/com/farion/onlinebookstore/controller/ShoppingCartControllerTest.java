@@ -1,17 +1,21 @@
 package com.farion.onlinebookstore.controller;
 
 import static com.farion.onlinebookstore.util.TestObjectMother.CART_ENDPOINT;
+import static com.farion.onlinebookstore.util.TestObjectMother.CART_ITEM_ENDPOINT;
 import static com.farion.onlinebookstore.util.TestObjectMother.CLEAR_ENDPOINT;
+import static com.farion.onlinebookstore.util.TestObjectMother.SLASH;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.farion.onlinebookstore.dto.ShoppingCartDto;
 import com.farion.onlinebookstore.dto.item.cartitem.CartItemDto;
 import com.farion.onlinebookstore.dto.item.cartitem.CreateCartItemRequestDto;
+import com.farion.onlinebookstore.dto.item.cartitem.UpdateCartItemDto;
 import com.farion.onlinebookstore.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
@@ -152,6 +156,67 @@ public class ShoppingCartControllerTest {
 
         mockMvc.perform(post(CART_ENDPOINT))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Sql(scripts = {
+            "classpath:db/users/add-test-user.sql",
+            "classpath:db/cartItems/add-test-cart-item.sql"
+    },
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {
+            "classpath:db/cartItems/remove-test-cart-item.sql",
+            "classpath:db/users/remove-test-user.sql"
+    },
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Test
+    @DisplayName("Update quantity of a book in the cart of authorized user")
+    void updateQuantity_authorizedUser_Success() throws Exception {
+        Long expectedId = 1L;
+        int expectedQuantity = 3;
+        String expectedTitle = "To Kill a Mockingbird";
+        UpdateCartItemDto requestDto = new UpdateCartItemDto();
+        requestDto.setQuantity(expectedQuantity);
+        addUserToSecurityContextHolder(1L);
+
+        CartItemDto expected = new CartItemDto();
+        expected.setId(expectedId);
+        expected.setQuantity(expectedQuantity);
+        expected.setBookId(expectedId);
+        expected.setBookTitle(expectedTitle);
+
+        MvcResult result = mockMvc.perform(
+                        put(CART_ENDPOINT + CART_ITEM_ENDPOINT + SLASH + expectedId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(requestDto))
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        CartItemDto actual =
+                objectMapper.readValue(result.getResponse().getContentAsString(),
+                        CartItemDto.class);
+
+        EqualsBuilder.reflectionEquals(expected, actual);
+    }
+
+    @Sql(scripts = {
+            "classpath:db/users/add-test-user.sql",
+            "classpath:db/cartItems/add-test-cart-item.sql"
+    },
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {
+            "classpath:db/cartItems/remove-test-cart-item.sql",
+            "classpath:db/users/remove-test-user.sql"
+    },
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Test
+    @DisplayName("Delete book from the cart of authorized user")
+    void deleteBookFromCart_authorizedUser_Success() throws Exception {
+        long cartItemId = 1L;
+        addUserToSecurityContextHolder(1L);
+
+        mockMvc.perform(delete(CART_ENDPOINT + CART_ITEM_ENDPOINT + SLASH + cartItemId))
+                .andExpect(status().isNoContent());
     }
 
     private void addUserToSecurityContextHolder(Long id) {

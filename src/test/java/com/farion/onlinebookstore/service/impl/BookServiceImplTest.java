@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -119,7 +118,7 @@ class BookServiceImplTest {
     @DisplayName("Deleting with existing id")
     void testDeleteById_ExistingId() {
         assertDoesNotThrow(() -> bookService.deleteById(TEST_ID));
-        verify(bookRepository, times(1)).deleteById(TEST_ID);
+        verify(bookRepository).deleteById(TEST_ID);
     }
 
     @Test
