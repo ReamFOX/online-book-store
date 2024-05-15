@@ -28,7 +28,9 @@ Swagger is integrated into the project to provide comprehensive API documentatio
 To access the Swagger UI and explore the API documentation:
 
 1. Once the application is running, navigate to `http://localhost:8080/swagger-ui.html` in your web browser.
+
 2. You will see the Swagger UI interface, where you can view all available endpoints, their descriptions, request parameters, and response schemas.
+
 3. Use the interactive features of Swagger UI to make requests directly from the browser and observe the responses.
 
 ## 🎨 Features and Functionality
@@ -98,6 +100,7 @@ To access the Swagger UI and explore the API documentation:
 
    Create a new MySQL database and note the database URL, username, and password.
 
+ 
 3. **Configure environment variables:**
 
    Create a `application.properties` file in the `src/main/resources` directory and add the following:
@@ -142,7 +145,7 @@ To access the Swagger UI and explore the API documentation:
     ```bash
     docker run -d -p 8080:8080 --name books-service books-service
     ```
-   ### Using Docker Compose
+### Using Docker Compose
 
 1. **Set up your environment variables:**
 
