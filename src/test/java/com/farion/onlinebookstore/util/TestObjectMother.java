@@ -16,6 +16,7 @@ public class TestObjectMother {
     public static final String ORDER_ENDPOINT = "/orders";
     public static final String AUTH_ENDPOINT = "/auth";
     public static final String ITEM_ENDPOINT = "/items";
+    public static final String CART_ITEM_ENDPOINT = "/cart-items";
     public static final String REGISTRATION_ENDPOINT = "/register";
     public static final String LOGIN_ENDPOINT = "/login";
     public static final String CART_ENDPOINT = "/cart";

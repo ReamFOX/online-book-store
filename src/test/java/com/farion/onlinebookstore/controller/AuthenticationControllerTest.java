@@ -50,7 +50,6 @@ public class AuthenticationControllerTest {
                 new UserLoginRequestDto("test@example.com", "ALABAMA1");
 
         String result = objectMapper.writeValueAsString(requestDto);
-        System.out.println(result);
         mockMvc.perform(post(AUTH_ENDPOINT + LOGIN_ENDPOINT)
                         .content(objectMapper.writeValueAsString(requestDto))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -65,7 +64,6 @@ public class AuthenticationControllerTest {
                 new UserLoginRequestDto("invaliduser@example.com", "invalidPassword");
 
         String result = objectMapper.writeValueAsString(requestDto);
-        System.out.println(result);
         mockMvc.perform(post(AUTH_ENDPOINT + LOGIN_ENDPOINT)
                         .content(objectMapper.writeValueAsString(requestDto))
                         .contentType(MediaType.APPLICATION_JSON))

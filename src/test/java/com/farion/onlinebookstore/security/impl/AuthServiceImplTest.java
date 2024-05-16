@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -21,17 +20,18 @@ import com.farion.onlinebookstore.service.RoleService;
 import com.farion.onlinebookstore.service.ShoppingCartService;
 import com.farion.onlinebookstore.util.JwtUtil;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@ExtendWith(MockitoExtension.class)
 public class AuthServiceImplTest {
     @Mock
     private UserRepository userRepository;
@@ -49,11 +49,6 @@ public class AuthServiceImplTest {
     private AuthenticationManager authenticationManager;
     @InjectMocks
     private AuthServiceImpl authService;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @DisplayName("Register new user")
     @Test
@@ -78,10 +73,9 @@ public class AuthServiceImplTest {
 
         UserDto result = authService.register(requestDto);
 
-        assertNotNull(result);
         assertEquals(requestDto.getEmail(), result.getEmail());
-        verify(userRepository, times(1)).save(any(User.class));
-        verify(shoppingCartService, times(1)).registerNewShoppingCart(any(User.class));
+        verify(userRepository).save(any(User.class));
+        verify(shoppingCartService).registerNewShoppingCart(any(User.class));
     }
 
     @DisplayName("Authenticate valid credentials")
@@ -98,6 +92,6 @@ public class AuthServiceImplTest {
 
         assertNotNull(result);
         assertNotNull(result.token());
-        verify(jwtUtil, times(1)).generateToken(anyString());
+        verify(jwtUtil).generateToken(anyString());
     }
 }
