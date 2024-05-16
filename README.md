@@ -100,7 +100,7 @@ To access the Swagger UI and explore the API documentation:
 
    Create a new MySQL database and note the database URL, username, and password.
 
- 
+
 3. **Configure environment variables:**
 
    Create a `application.properties` file in the `src/main/resources` directory and add the following:
@@ -215,6 +215,7 @@ To access the Swagger UI and explore the API documentation:
     ```
 
    This command will start both the MySQL and the application containers, with the application available at `http://localhost:8080`.
+
 ## 🧪 Running Tests
 
 To run tests, use the following command:

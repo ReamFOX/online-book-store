@@ -15,9 +15,12 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     healthcheck:
       test: [ "CMD-SHELL", "mysqladmin ping -h mysqldb -u $MYSQLDB_USER -p$MYSQLDB_PASSWORD" ]
-      interval: 60s
-      timeout: 60s
-      retries: 3
+      interval: 10s
+      timeout: 30s
+      retries: 5
+    networks:
+      - my_network
+
   app:
     depends_on:
       mysqldb:
@@ -37,3 +40,9 @@ services:
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect"
       }'
       JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
