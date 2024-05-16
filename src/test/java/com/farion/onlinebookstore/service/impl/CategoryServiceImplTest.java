@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -132,6 +131,6 @@ public class CategoryServiceImplTest {
     void deleteById_WithValidId_VerifiesRepositoryDeleteById() {
         categoryService.deleteById(TEST_ID);
 
-        verify(categoryRepository, times(1)).deleteById(TEST_ID);
+        verify(categoryRepository).deleteById(TEST_ID);
     }
 }

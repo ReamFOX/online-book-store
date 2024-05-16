@@ -28,7 +28,9 @@ Swagger is integrated into the project to provide comprehensive API documentatio
 To access the Swagger UI and explore the API documentation:
 
 1. Once the application is running, navigate to `http://localhost:8080/swagger-ui.html` in your web browser.
+
 2. You will see the Swagger UI interface, where you can view all available endpoints, their descriptions, request parameters, and response schemas.
+
 3. Use the interactive features of Swagger UI to make requests directly from the browser and observe the responses.
 
 ## 🎨 Features and Functionality
@@ -98,6 +100,7 @@ To access the Swagger UI and explore the API documentation:
 
    Create a new MySQL database and note the database URL, username, and password.
 
+
 3. **Configure environment variables:**
 
    Create a `application.properties` file in the `src/main/resources` directory and add the following:
@@ -142,6 +145,77 @@ To access the Swagger UI and explore the API documentation:
     ```bash
     docker run -d -p 8080:8080 --name books-service books-service
     ```
+### Using Docker Compose
+
+1. **Set up your environment variables:**
+
+   Create a `.env` file in the root directory and add the following variables:
+
+    ```env
+    MYSQLDB_USER=your_db_username
+    MYSQLDB_PASSWORD=your_db_password
+    MYSQLDB_DATABASE=your_db_name
+    MYSQLDB_ROOT_PASSWORD=your_root_password
+    MYSQLDB_LOCAL_PORT=3306
+    MYSQLDB_DOCKER_PORT=3306
+    SPRING_LOCAL_PORT=8080
+    SPRING_DOCKER_PORT=8080
+    DEBUG_PORT=5005
+    ```
+
+2. **Create a `docker-compose.yml` file in the root directory:**
+
+    ```yaml
+    version: "3.8"
+
+    services:
+      mysqldb:
+        platform: linux/arm64
+        image: mysql
+        restart: unless-stopped
+        env_file: ./.env
+        environment:
+          - MYSQL_USER=$MYSQLDB_USER
+          - MYSQL_PASSWORD=$MYSQLDB_PASSWORD
+          - MYSQL_DATABASE=$MYSQLDB_DATABASE
+          - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+        ports:
+          - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+        healthcheck:
+          test: [ "CMD-SHELL", "mysqladmin ping -h mysqldb -u $MYSQLDB_USER -p$MYSQLDB_PASSWORD" ]
+          interval: 60s
+          timeout: 60s
+          retries: 3
+
+      app:
+        depends_on:
+          mysqldb:
+            condition: service_healthy
+        restart: on-failure
+        image: books-service
+        build: .
+        env_file: ./.env
+        ports:
+          - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+          - $DEBUG_PORT:$DEBUG_PORT
+        environment:
+          SPRING_APPLICATION_JSON: '{
+            "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE",
+            "spring.datasource.username" : "$MYSQLDB_USER",
+            "spring.datasource.password" : "$MYSQLDB_PASSWORD",
+            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect"
+          }'
+          JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    ```
+
+3. **Run the Docker Compose setup:**
+
+    ```bash
+    docker-compose up -d
+    ```
+
+   This command will start both the MySQL and the application containers, with the application available at `http://localhost:8080`.
+
 ## 🧪 Running Tests
 
 To run tests, use the following command:
