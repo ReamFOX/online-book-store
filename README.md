@@ -216,6 +216,33 @@ To access the Swagger UI and explore the API documentation:
 
    This command will start both the MySQL and the application containers, with the application available at `http://localhost:8080`.
 
+## 📬 Postman Collection
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://elements.getpostman.com/redirect?entityId=33948143-d2ac0092-0285-4de1-a6cf-cef4cd01c19a&entityType=collection)
+
+Here you can fork  collection of requests for API in Postman.
+
+## 🌐 Deployment on AWS
+
+### AWS Services Used
+
+- **Amazon EC2**: Hosts and runs the Spring Boot application.
+- **Amazon RDS**: Hosts the MySQL database for data storage.
+- **Amazon ECR**: Stores Docker container images for deployment.
+- **Amazon IAM**: Manages user access and permissions securely.
+
+### Accessing the Deployed API
+
+The deployed API is accessible via the following URL:
+
+[![Base URL](https://img.shields.io/badge/Base_URL-API-blue)](http://ec2-52-201-243-241.compute-1.amazonaws.com/api)
+
+You can access the Swagger UI for detailed API documentation and interactive testing at:
+
+[![Swagger UI](https://img.shields.io/badge/Swagger-UI-green)](http://ec2-52-201-243-241.compute-1.amazonaws.com/api/swagger-ui/index.html)
+
+This link will take you to the Swagger interface, where you can explore all available endpoints, their descriptions, request parameters, and response schemas. The interactive features of Swagger UI allow you to make requests directly from your browser and observe the responses.
+
 ## 🧪 Running Tests
 
 To run tests, use the following command:
@@ -240,8 +267,3 @@ The project uses JUnit for unit testing and Mockito for mocking dependencies. Th
 ### Challenge 3: Comprehensive API Documentation
 
 **Solution:** Integrated Swagger to provide detailed API documentation and facilitate easy testing of endpoints.
-## 📬 Postman Collection
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://elements.getpostman.com/redirect?entityId=33948143-d2ac0092-0285-4de1-a6cf-cef4cd01c19a&entityType=collection)
-
-Here you can fork  collection of requests for API in Postman.
